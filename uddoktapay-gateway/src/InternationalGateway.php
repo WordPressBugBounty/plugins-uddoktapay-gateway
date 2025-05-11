@@ -1,525 +1,567 @@
 <?php
+/**
+ * UddoktaPay Payment Gateway International Gateway Class.
+ *
+ * This file contains the International Gateway class for the UddoktaPay Payment Gateway,
+ * handling international payment transactions through multiple payment providers.
+ *
+ * @package UddoktaPayGateway
+ * @since 1.0.0
+ */
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace UddoktaPay\UddoktaPayGateway;
 
-use UddoktaPay\UddoktaPayGateway\APIHandler;
 use UddoktaPay\UddoktaPayGateway\Enums\OrderStatus;
 
 // If this file is called directly, abort!!!
-defined('ABSPATH') || die('Direct access is not allowed.');
+defined( 'ABSPATH' ) || exit( 'Direct access is not allowed.' );
 
-class InternationalGateway extends \WC_Payment_Gateway
-{
-    /**
-     * API Handler instance
-     *
-     * @var APIHandler|null
-     */
-    protected $api = null;
+/**
+ * International Gateway Class
+ *
+ * Extends the WooCommerce Payment Gateway class to provide international
+ * payment options through UddoktaPay's global payment processors.
+ *
+ * @since 1.0.0
+ */
+class InternationalGateway extends \WC_Payment_Gateway {
 
-    /**
-     * Debug mode
-     *
-     * @var bool
-     */
-    protected $debug = false;
+	/**
+	 * API Handler instance
+	 *
+	 * @var APIHandler|null
+	 */
+	protected $api = null;
 
-    /**
-     * API URL
-     *
-     * @var string
-     */
-    protected $api_url = '';
+	/**
+	 * Debug mode
+	 *
+	 * @var bool
+	 */
+	protected $debug = false;
 
-    /**
-     * API Key
-     *
-     * @var string
-     */
-    protected $api_key = '';
+	/**
+	 * API URL
+	 *
+	 * @var string
+	 */
+	protected $api_url = '';
 
-    /**
-     * Webhook URL
-     *
-     * @var string
-     */
-    protected $webhook_url;
+	/**
+	 * API Key
+	 *
+	 * @var string
+	 */
+	protected $api_key = '';
 
-    /**
-     * Exchange rate
-     *
-     * @var float
-     */
-    protected $exchange_rate = 120.0;
+	/**
+	 * Webhook URL
+	 *
+	 * @var string
+	 */
+	protected $webhook_url;
 
-    /**
-     * Constructor for the gateway.
-     */
-    public function __construct()
-    {
-        // Setup general properties
-        $this->setup_properties();
+	/**
+	 * Exchange rate
+	 *
+	 * @var float
+	 */
+	protected $exchange_rate = 120.0;
 
-        // Load the settings
-        $this->init_form_fields();
-        $this->init_settings();
+	/**
+	 * Constructor for the gateway.
+	 */
+	public function __construct() {
+		// Setup general properties.
+		$this->setup_properties();
 
-        // Get settings with type coercion
-        $this->title = (string) $this->get_option('title', __('International Payment', 'uddoktapay-gateway'));
-        $this->description = (string) $this->get_option('description', __('Pay securely via International payment methods.', 'uddoktapay-gateway'));
-        $this->api_key = (string) $this->get_option('api_key', '');
-        $this->api_url = (string) $this->get_option('api_url', '');
-        $this->exchange_rate = (float) $this->get_option('exchange_rate', '120');
-        $this->debug = $this->get_option('debug') === 'yes';
+		// Load the settings.
+		$this->init_form_fields();
+		$this->init_settings();
 
-        // Actions
-        add_action(
-            'woocommerce_update_options_payment_gateways_' . $this->id,
-            [$this, 'process_admin_options']
-        );
+		// Get settings with type coercion.
+		$this->title         = (string) $this->get_option( 'title', __( 'International Payment', 'uddoktapay-gateway' ) );
+		$this->description   = (string) $this->get_option( 'description', __( 'Pay securely via International payment methods.', 'uddoktapay-gateway' ) );
+		$this->api_key       = (string) $this->get_option( 'api_key', '' );
+		$this->api_url       = (string) $this->get_option( 'api_url', '' );
+		$this->exchange_rate = (float) $this->get_option( 'exchange_rate', '120' );
+		$this->debug         = 'yes' === $this->get_option( 'debug' );
 
-        add_action(
-            'woocommerce_api_' . $this->id,
-            [$this, 'handle_webhook']
-        );
+		// Actions.
+		add_action(
+			'woocommerce_update_options_payment_gateways_' . $this->id,
+			array( $this, 'process_admin_options' )
+		);
 
-        add_action('woocommerce_admin_order_data_after_billing_address',
-            [$this, 'display_transaction_data']
-        );
+		add_action(
+			'woocommerce_api_' . $this->id,
+			array( $this, 'handle_webhook' )
+		);
 
-        // Validation
-        if (!$this->is_valid_for_use()) {
-            $this->enabled = 'no';
-        }
-    }
+		add_action(
+			'woocommerce_admin_order_data_after_billing_address',
+			array( $this, 'display_transaction_data' )
+		);
 
-    /**
-     * Setup general properties for the gateway
-     *
-     * @return void
-     */
-    protected function setup_properties()
-    {
-        $this->id = 'uddoktapayinternational';
-        $this->icon = (string) apply_filters('woocommerce_uddoktapay_icon', '');
-        $this->has_fields = false;
-        $this->method_title = __('UddoktaPay International', 'uddoktapay-gateway');
-        $this->method_description = sprintf(
-            '%s<br/><a href="%s" target="_blank">%s</a>',
-            __('Accept international payments via multiple gateways including PayPal, Stripe, and more.', 'uddoktapay-gateway'),
-            esc_url('https://uddoktapay.com'),
-            __('Sign up for UddoktaPay account', 'uddoktapay-gateway')
-        );
-        $this->webhook_url = (string) add_query_arg('wc-api', $this->id, home_url('/'));
-        $this->supports = [
-            'products',
-        ];
-    }
+		// Validation.
+		if ( ! $this->is_valid_for_use() ) {
+			$this->enabled = 'no';
+		}
+	}
 
-    /**
-     * Check if gateway is valid for use
-     *
-     * @return bool
-     */
-    protected function is_valid_for_use()
-    {
-        if (empty($this->api_key) || empty($this->api_url)) {
-            $this->add_error(__('UddoktaPay requires API Key and API URL to be configured.', 'uddoktapay-gateway'));
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * Setup general properties for the gateway.
+	 *
+	 * @return void
+	 */
+	protected function setup_properties() {
+		$this->id           = 'uddoktapayinternational';
+		$this->icon         = (string) apply_filters( 'woocommerce_uddoktapay_icon', UDDOKTAPAY_URL . 'assets/images/uddoktapay-international.png' );
+		$this->has_fields   = false;
+		$this->method_title = __( 'UddoktaPay International', 'uddoktapay-gateway' );
 
-    /**
-     * Initialize Gateway Settings Form Fields
-     *
-     * @return void
-     */
-    public function init_form_fields()
-    {
-        $currency = get_woocommerce_currency();
+		// Translators: %s: URL for UddoktaPay website.
+		$this->method_description = sprintf(
+			/* translators: %s: URL for UddoktaPay website */
+			'%s<br/><a href="%s" target="_blank">%s</a>',
+			__( 'Accept international payments via multiple gateways including PayPal, Stripe, and more.', 'uddoktapay-gateway' ),
+			esc_url( 'https://uddoktapay.com' ),
+			__( 'Sign up for UddoktaPay account', 'uddoktapay-gateway' )
+		);
+		$this->webhook_url = (string) add_query_arg( 'wc-api', $this->id, home_url( '/' ) );
+		$this->supports    = array(
+			'products',
+		);
+	}
 
-        $base_fields = [
-            'enabled' => [
-                'title' => __('Enable/Disable', 'uddoktapay-gateway'),
-                'type' => 'checkbox',
-                'label' => __('Enable UddoktaPay International Payment', 'uddoktapay-gateway'),
-                'default' => 'no',
-            ],
-            'title' => [
-                'title' => __('Title', 'uddoktapay-gateway'),
-                'type' => 'text',
-                'description' => __('This controls the title which the user sees during checkout.', 'uddoktapay-gateway'),
-                'default' => __('International Payment', 'uddoktapay-gateway'),
-                'desc_tip' => true,
-            ],
-            'description' => [
-                'title' => __('Description', 'uddoktapay-gateway'),
-                'type' => 'textarea',
-                'description' => __('This controls the description which the user sees during checkout.', 'uddoktapay-gateway'),
-                'default' => __('Pay securely via PayPal, Stripe, Paddle, Perfect Money.', 'uddoktapay-gateway'),
-                'desc_tip' => true,
-            ],
-            'api_key' => [
-                'title' => __('API Key', 'uddoktapay-gateway'),
-                'type' => 'password',
-                'description' => __('Get your API key from UddoktaPay Panel → Brand Settings.', 'uddoktapay-gateway'),
-            ],
-            'api_url' => [
-                'title' => __('API URL', 'uddoktapay-gateway'),
-                'type' => 'url',
-                'description' => __('Get your API URL from UddoktaPay Panel → Brand Settings.', 'uddoktapay-gateway'),
-            ],
-            'physical_product_status' => [
-                'title' => __('Physical Product Status', 'uddoktapay-gateway'),
-                'type' => 'select',
-                'description' => __('Select status for physical product orders after successful payment.', 'uddoktapay-gateway'),
-                'default' => OrderStatus::PROCESSING,
-                'options' => [
-                    OrderStatus::ON_HOLD => __('On Hold', 'uddoktapay-gateway'),
-                    OrderStatus::PROCESSING => __('Processing', 'uddoktapay-gateway'),
-                    OrderStatus::COMPLETED => __('Completed', 'uddoktapay-gateway'),
-                ],
-            ],
-            'digital_product_status' => [
-                'title' => __('Digital Product Status', 'uddoktapay-gateway'),
-                'type' => 'select',
-                'description' => __('Select status for digital/downloadable product orders after successful payment.', 'uddoktapay-gateway'),
-                'default' => OrderStatus::COMPLETED,
-                'options' => [
-                    OrderStatus::ON_HOLD => __('On Hold', 'uddoktapay-gateway'),
-                    OrderStatus::PROCESSING => __('Processing', 'uddoktapay-gateway'),
-                    OrderStatus::COMPLETED => __('Completed', 'uddoktapay-gateway'),
-                ],
-            ],
-        ];
+	/**
+	 * Check if gateway is valid for use.
+	 *
+	 * @return bool
+	 */
+	protected function is_valid_for_use() {
+		if ( empty( $this->api_key ) || empty( $this->api_url ) ) {
+			$this->add_error( __( 'UddoktaPay requires API Key and API URL to be configured.', 'uddoktapay-gateway' ) );
 
-        if ($currency !== 'USD') {
-            $base_fields['exchange_rate'] = [
-                'title' => sprintf(__('%s to USD Exchange Rate', 'uddoktapay-gateway'), $currency),
-                'type' => 'text',
-                'desc_tip' => true,
-                'description' => __('This rate will be applied to convert the total amount to USD', 'uddoktapay-gateway'),
-                'default' => '0',
-                'custom_attributes' => [
-                    'step' => '0.01',
-                    'min' => '0',
-                ],
-            ];
-        }
+			return false;
+		}
 
-        $base_fields['debug'] = [
-            'title' => __('Debug Log', 'uddoktapay-gateway'),
-            'type' => 'checkbox',
-            'label' => __('Enable logging', 'uddoktapay-gateway'),
-            'default' => 'no',
-            'description' => sprintf(
-                __('Log gateway events inside %s', 'uddoktapay-gateway'),
-                '<code>' . \WC_Log_Handler_File::get_log_file_path('uddoktapay') . '</code>'
-            ),
-        ];
+		return true;
+	}
 
-        $this->form_fields = $base_fields;
-    }
+	/**
+	 * Initialize Gateway Settings Form Fields.
+	 *
+	 * @return void
+	 */
+	public function init_form_fields() {
+		$currency = get_woocommerce_currency();
 
-    /**
-     * Get the API Handler instance
-     *
-     * @return APIHandler
-     */
-    protected function get_api()
-    {
-        if ($this->api === null) {
-            APIHandler::$debug = $this->debug;
-            APIHandler::$api_url = $this->api_url;
-            APIHandler::$api_key = $this->api_key;
+		$base_fields = array(
+			'enabled'                 => array(
+				'title'   => __( 'Enable/Disable', 'uddoktapay-gateway' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable UddoktaPay International Payment', 'uddoktapay-gateway' ),
+				'default' => 'no',
+			),
+			'show_icon'               => array(
+				'title'   => __( 'Show Icon', 'uddoktapay-gateway' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Display icons on checkout page.', 'uddoktapay-gateway' ),
+				'default' => 'no',
+			),
+			'title'                   => array(
+				'title'       => __( 'Title', 'uddoktapay-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'This controls the title which the user sees during checkout.', 'uddoktapay-gateway' ),
+				'default'     => __( 'International Payment', 'uddoktapay-gateway' ),
+				'desc_tip'    => true,
+			),
+			'description'             => array(
+				'title'       => __( 'Description', 'uddoktapay-gateway' ),
+				'type'        => 'textarea',
+				'description' => __( 'This controls the description which the user sees during checkout.', 'uddoktapay-gateway' ),
+				'default'     => __( 'Pay securely via PayPal, Stripe, Paddle, Perfect Money.', 'uddoktapay-gateway' ),
+				'desc_tip'    => true,
+			),
+			'api_key'                 => array(
+				'title'       => __( 'API Key', 'uddoktapay-gateway' ),
+				'type'        => 'password',
+				'description' => __( 'Get your API key from UddoktaPay Panel → Brand Settings.', 'uddoktapay-gateway' ),
+			),
+			'api_url'                 => array(
+				'title'       => __( 'API URL', 'uddoktapay-gateway' ),
+				'type'        => 'url',
+				'description' => __( 'Get your API URL from UddoktaPay Panel → Brand Settings.', 'uddoktapay-gateway' ),
+			),
+			'physical_product_status' => array(
+				'title'       => __( 'Physical Product Status', 'uddoktapay-gateway' ),
+				'type'        => 'select',
+				'description' => __( 'Select status for physical product orders after successful payment.', 'uddoktapay-gateway' ),
+				'default'     => OrderStatus::PROCESSING,
+				'options'     => array(
+					OrderStatus::ON_HOLD    => __( 'On Hold', 'uddoktapay-gateway' ),
+					OrderStatus::PROCESSING => __( 'Processing', 'uddoktapay-gateway' ),
+					OrderStatus::COMPLETED  => __( 'Completed', 'uddoktapay-gateway' ),
+				),
+			),
+			'digital_product_status'  => array(
+				'title'       => __( 'Digital Product Status', 'uddoktapay-gateway' ),
+				'type'        => 'select',
+				'description' => __( 'Select status for digital/downloadable product orders after successful payment.', 'uddoktapay-gateway' ),
+				'default'     => OrderStatus::COMPLETED,
+				'options'     => array(
+					OrderStatus::ON_HOLD    => __( 'On Hold', 'uddoktapay-gateway' ),
+					OrderStatus::PROCESSING => __( 'Processing', 'uddoktapay-gateway' ),
+					OrderStatus::COMPLETED  => __( 'Completed', 'uddoktapay-gateway' ),
+				),
+			),
+		);
 
-            $this->api = new APIHandler();
-        }
-        return $this->api;
-    }
+		if ( 'USD' !== $currency ) {
+			// Translators: %s: Currency code.
+			$base_fields['exchange_rate'] = array(
+				'title'             => sprintf(
+					/* translators: %s: Currency code */
+					__( '%s to USD Exchange Rate', 'uddoktapay-gateway' ),
+					$currency
+				),
+				'type'              => 'text',
+				'desc_tip'          => true,
+				'description'       => __( 'This rate will be applied to convert the total amount to USD.', 'uddoktapay-gateway' ),
+				'default'           => '0',
+				'custom_attributes' => array(
+					'step' => '0.01',
+					'min'  => '0',
+				),
+			);
+		}
 
-    /**
-     * Process Payment
-     *
-     * @param int $order_id Order ID
-     * @return array|null
-     */
-    public function process_payment($order_id)
-    {
-        try {
-            $order = wc_get_order($order_id);
-            if (!$order) {
-                throw new \Exception(__('Invalid order', 'uddoktapay-gateway'));
-            }
+		// Translators: %s: Log file path.
+		$base_fields['debug'] = array(
+			'title'       => __( 'Debug Log', 'uddoktapay-gateway' ),
+			'type'        => 'checkbox',
+			'label'       => __( 'Enable logging', 'uddoktapay-gateway' ),
+			'default'     => 'no',
+			'description' => sprintf(
+				/* translators: %s: Log file path */
+				__( 'Log gateway events inside %s', 'uddoktapay-gateway' ),
+				'<code>' . \WC_Log_Handler_File::get_log_file_path( 'uddoktapay' ) . '</code>'
+			),
+		);
 
-            $metadata = [
-                'order_id' => $order->get_id(),
-                'redirect_url' => $this->get_return_url($order),
-            ];
+		$this->form_fields = $base_fields;
+	}
 
-            $result = $this->get_api()->create_payment_international(
-                $order->get_total(),
-                $order->get_currency(),
-                $order->get_billing_first_name(),
-                $order->get_billing_email(),
-                $metadata,
-                $this->webhook_url,
-                $order->get_cancel_order_url_raw(),
-                $this->webhook_url,
-                $this->exchange_rate
-            );
+	/**
+	 * Get the payment gateway icon for checkout.
+	 *
+	 * @return string
+	 */
+	public function get_icon() {
+		if ( 'no' === $this->get_option( 'show_icon', 'no' ) ) {
+			return '';
+		}
 
-            if (empty($result->payment_url)) {
-                throw new \Exception($result->message ?? __('Payment URL not received', 'uddoktapay-gateway'));
-            }
+		$icon = $this->icon ? '<img src="' . esc_url( \WC_HTTPS::force_https_url( $this->icon ) ) . '" alt="' . esc_attr( $this->get_title() ) . '" />' : '';
 
-            // Mark as pending payment
-            $order->update_status(
-                OrderStatus::PENDING,
-                __('Awaiting UddoktaPay payment', 'uddoktapay-gateway')
-            );
+		return apply_filters( 'woocommerce_gateway_icon', $icon, $this->id );
+	}
 
-            // Empty cart
-            WC()->cart->empty_cart();
+	/**
+	 * Get the API Handler instance.
+	 *
+	 * @return APIHandler
+	 */
+	protected function get_api() {
+		if ( null === $this->api ) {
+			APIHandler::$debug   = $this->debug;
+			APIHandler::$api_url = $this->api_url;
+			APIHandler::$api_key = $this->api_key;
 
-            return [
-                'result' => 'success',
-                'redirect' => $result->payment_url,
-            ];
+			$this->api = new APIHandler();
+		}
 
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-    }
+		return $this->api;
+	}
 
-    /**
-     * Handle Webhook
-     *
-     * @return void
-     */
-    public function handle_webhook()
-    {
-        try {
-            $invoice_id = isset($_GET['invoice_id']) ? sanitize_text_field($_GET['invoice_id']) : '';
+	/**
+	 * Process Payment.
+	 *
+	 * @param int $order_id Order ID.
+	 * @return array|null
+	 * @throws \Exception When payment processing fails.
+	 */
+	public function process_payment( $order_id ) {
+		try {
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				throw new \Exception( __( 'Invalid order', 'uddoktapay-gateway' ) );
+			}
 
-            if (!empty($invoice_id)) {
-                $this->handle_redirect_verification($invoice_id);
-            } else {
-                $this->handle_webhook_notification();
-            }
-        } catch (\Exception $e) {
-            wp_die($e->getMessage(), 'UddoktaPay Webhook Error', ['response' => 500]);
-        }
-    }
+			$metadata = array(
+				'order_id'     => $order->get_id(),
+				'redirect_url' => $this->get_return_url( $order ),
+			);
 
-    /**
-     * Handle redirect verification
-     *
-     * @param string $invoice_id
-     * @return void
-     */
-    protected function handle_redirect_verification($invoice_id)
-    {
-        $result = $this->get_api()->verify_payment($invoice_id);
+			$result = $this->get_api()->create_payment_international(
+				$order->get_total(),
+				$order->get_currency(),
+				$order->get_billing_first_name(),
+				$order->get_billing_email(),
+				$metadata,
+				$this->webhook_url,
+				$order->get_cancel_order_url_raw(),
+				$this->webhook_url,
+				$this->exchange_rate
+			);
 
-        if (!isset($result->metadata->order_id)) {
-            throw new \Exception(__('Invalid order data received', 'uddoktapay-gateway'));
-        }
+			if ( empty( $result->payment_url ) ) {
+				throw new \Exception( $result->message ?? __( 'Payment URL not received', 'uddoktapay-gateway' ) );
+			}
 
-        $order = wc_get_order($result->metadata->order_id);
-        if (!$order) {
-            throw new \Exception(__('Order not found', 'uddoktapay-gateway'));
-        }
+			// Mark as pending payment.
+			$order->update_status(
+				OrderStatus::PENDING,
+				__( 'Awaiting UddoktaPay payment', 'uddoktapay-gateway' )
+			);
 
-        $this->process_order_status($order, $result);
+			// Empty cart.
+			WC()->cart->empty_cart();
 
-        wp_redirect($result->metadata->redirect_url);
-        exit;
-    }
+			return array(
+				'result'   => 'success',
+				'redirect' => $result->payment_url,
+			);
 
-    /**
-     * Handle webhook notification
-     *
-     * @return void
-     */
-    protected function handle_webhook_notification()
-    {
-        $payload = file_get_contents('php://input');
+		} catch ( \Exception ) {
+			throw new \Exception( esc_html__( 'Something went wrong', 'uddoktapay-gateway' ) );
+		}
+	}
 
-        if (empty($payload)) {
-            throw new \Exception(__('Empty webhook payload', 'uddoktapay-gateway'));
-        }
+	/**
+	 * Handle Webhook.
+	 *
+	 * @return void
+	 */
+	public function handle_webhook() {
+		try {
+			// Verify nonce is not applicable here as this is an external API callback.
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended
+			$invoice_id = isset( $_GET['invoice_id'] ) ? sanitize_text_field( wp_unslash( $_GET['invoice_id'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-        if (!$this->validate_webhook_signature()) {
-            throw new \Exception(__('Invalid webhook signature', 'uddoktapay-gateway'));
-        }
+			if ( ! empty( $invoice_id ) ) {
+				$this->handle_redirect_verification( $invoice_id );
+			} else {
+				$this->handle_webhook_notification();
+			}
+		} catch ( \Exception ) {
+			wp_die( esc_html( __( 'Something went wrong', 'uddoktapay-gateway' ) ), 'UddoktaPay Webhook Error', array( 'response' => 500 ) );
+		}
+	}
 
-        $data = json_decode($payload);
+	/**
+	 * Handle redirect verification.
+	 *
+	 * @param string $invoice_id The invoice ID to verify.
+	 * @return void
+	 * @throws \Exception If verification fails.
+	 */
+	protected function handle_redirect_verification( $invoice_id ) {
+		$result = $this->get_api()->verify_payment( $invoice_id );
 
-        if (!isset($data->metadata->order_id)) {
-            throw new \Exception(__('Order ID not found in webhook data', 'uddoktapay-gateway'));
-        }
+		if ( ! isset( $result->metadata->order_id ) ) {
+			throw new \Exception( esc_html__( 'Invalid order data received', 'uddoktapay-gateway' ) );
+		}
 
-        $order = wc_get_order($data->metadata->order_id);
-        if (!$order) {
-            throw new \Exception(__('Order not found', 'uddoktapay-gateway'));
-        }
+		$order = wc_get_order( $result->metadata->order_id );
+		if ( ! $order ) {
+			throw new \Exception( esc_html__( 'Order not found', 'uddoktapay-gateway' ) );
+		}
 
-        $this->process_order_status($order, $data);
-    }
+		$this->process_order_status( $order, $result );
 
-    /**
-     * Validate webhook signature
-     *
-     * @return bool
-     */
-    protected function validate_webhook_signature()
-    {
-        $provided_key = isset($_SERVER['HTTP_RT_UDDOKTAPAY_API_KEY']) ? $_SERVER['HTTP_RT_UDDOKTAPAY_API_KEY'] : '';
-        return hash_equals($this->api_key, $provided_key);
-    }
+		// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+		wp_redirect( $result->metadata->redirect_url );
+		exit;
+	}
 
-    /**
-     * Process order status
-     *
-     * @param WC_Order $order
-     * @param object $data
-     * @return void
-     */
-    protected function process_order_status($order, $data)
-    {
-        if ($order->get_status() === OrderStatus::COMPLETED) {
-            return;
-        }
+	/**
+	 * Handle webhook notification.
+	 *
+	 * @return void
+	 * @throws \Exception If webhook validation fails.
+	 */
+	protected function handle_webhook_notification() {
+		$payload = file_get_contents( 'php://input' );
 
-        $order->update_meta_data('uddoktapay_international_payment_data', $data);
+		if ( empty( $payload ) ) {
+			throw new \Exception( esc_html__( 'Empty webhook payload', 'uddoktapay-gateway' ) );
+		}
 
-        if ($data->status === 'COMPLETED') {
-            $this->handle_completed_payment($order, $data);
-        } else {
-            $order->update_status(
-                OrderStatus::ON_HOLD,
-                __('Payment is on hold. Please check manually.', 'uddoktapay-gateway')
-            );
-        }
+		if ( ! $this->validate_webhook_signature() ) {
+			throw new \Exception( esc_html__( 'Invalid webhook signature', 'uddoktapay-gateway' ) );
+		}
 
-        $order->save();
-    }
+		$data = json_decode( $payload );
 
-    /**
-     * Handle completed payment
-     *
-     * @param WC_Order $order
-     * @param object $data
-     * @return void
-     */
-    protected function handle_completed_payment($order, $data)
-    {
-        $status = $this->is_order_virtual($order) ? $this->get_option('digital_product_status', OrderStatus::COMPLETED) : $this->get_option('physical_product_status', OrderStatus::PROCESSING);
-        $note = sprintf(
-            __('Payment via %s. Amount: %s, Transaction ID: %s', 'uddoktapay-gateway'),
-            $data->payment_method,
-            $data->amount,
-            $data->transaction_id
-        );
+		if ( ! isset( $data->metadata->order_id ) ) {
+			throw new \Exception( esc_html__( 'Order ID not found in webhook data', 'uddoktapay-gateway' ) );
+		}
 
-        $order->payment_complete($data->transaction_id);
-        $order->update_status($status, $note);
-    }
+		$order = wc_get_order( $data->metadata->order_id );
+		if ( ! $order ) {
+			throw new \Exception( esc_html__( 'Order not found', 'uddoktapay-gateway' ) );
+		}
 
-    /**
-     * Check if order is virtual
-     *
-     * @param WC_Order $order
-     * @return bool
-     */
-    protected function is_order_virtual($order)
-    {
-        $virtual = false;
+		$this->process_order_status( $order, $data );
+	}
 
-        foreach ($order->get_items() as $item) {
-            $product = $item->get_product();
-            if ($product && ($product->is_virtual() || $product->is_downloadable())) {
-                $virtual = true;
-                break;
-            }
-        }
+	/**
+	 * Validate webhook signature.
+	 *
+	 * @return bool
+	 */
+	protected function validate_webhook_signature() {
+		$provided_key = isset( $_SERVER['HTTP_RT_UDDOKTAPAY_API_KEY'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_RT_UDDOKTAPAY_API_KEY'] ) ) : '';
 
-        return $virtual;
-    }
+		return hash_equals( $this->api_key, $provided_key );
+	}
 
-    /**
-     * Display transaction data in admin order page
-     *
-     * @param WC_Order $order
-     */
-    public function display_transaction_data($order)
-    {
-        if ($order->get_payment_method() !== $this->id) {
-            return;
-        }
+	/**
+	 * Process order status.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @param object    $data  The payment data.
+	 * @return void
+	 */
+	protected function process_order_status( $order, $data ) {
+		if ( OrderStatus::COMPLETED === $order->get_status() ) {
+			return;
+		}
 
-        $payment_data = $order->get_meta('uddoktapay_international_payment_data');
-        if (empty($payment_data)) {
-            return;
-        }
+		$order->update_meta_data( 'uddoktapay_international_payment_data', $data );
 
-        $this->display_payment_info_html($payment_data);
-    }
+		if ( 'COMPLETED' === $data->status ) {
+			$this->handle_completed_payment( $order, $data );
+		} else {
+			$order->update_status(
+				OrderStatus::ON_HOLD,
+				__( 'Payment is on hold. Please check manually.', 'uddoktapay-gateway' )
+			);
+		}
 
-    /**
-     * Display payment information HTML
-     *
-     * @param object $data Payment data
-     */
-    protected function display_payment_info_html($data)
-    {
-        $payment_method = esc_html(ucfirst($data->payment_method ?? ''));
-        $sender_number = esc_html($data->sender_number ?? '');
-        $transaction_id = esc_html($data->transaction_id ?? '');
-        $amount = esc_html($data->amount ?? '');
+		$order->save();
+	}
 
-        echo "<div class='form-field form-field-wide uddoktapay-admin-data'>
+	/**
+	 * Handle completed payment.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @param object    $data  The payment data.
+	 * @return void
+	 */
+	protected function handle_completed_payment( $order, $data ) {
+		$status = $this->is_order_virtual( $order ) ? $this->get_option( 'digital_product_status', OrderStatus::COMPLETED ) : $this->get_option( 'physical_product_status', OrderStatus::PROCESSING );
 
-            <table class='wp-list-table widefat striped posts'>
+		// Translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID.
+		$note = sprintf(
+			/* translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID */
+			__( 'Payment via %1$s. Amount: %2$s, Transaction ID: %3$s', 'uddoktapay-gateway' ),
+			$data->payment_method,
+			$data->amount,
+			$data->transaction_id
+		);
+
+		$order->payment_complete( $data->transaction_id );
+		$order->update_status( $status, $note );
+	}
+
+	/**
+	 * Check if order is virtual.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @return bool
+	 */
+	protected function is_order_virtual( $order ) {
+		$virtual = false;
+
+		foreach ( $order->get_items() as $item ) {
+			$product = $item->get_product();
+			if ( $product && ( $product->is_virtual() || $product->is_downloadable() ) ) {
+				$virtual = true;
+				break;
+			}
+		}
+
+		return $virtual;
+	}
+
+	/**
+	 * Display transaction data in admin order page.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @return void
+	 */
+	public function display_transaction_data( $order ) {
+		if ( $order->get_payment_method() !== $this->id ) {
+			return;
+		}
+
+		$payment_data = $order->get_meta( 'uddoktapay_international_payment_data' );
+		if ( empty( $payment_data ) ) {
+			return;
+		}
+
+		$this->display_payment_info_html( $payment_data );
+	}
+
+	/**
+	 * Display payment information HTML.
+	 *
+	 * @param object $data Payment data.
+	 * @return void
+	 */
+	protected function display_payment_info_html( $data ) {
+		$payment_method = esc_html( ucfirst( $data->payment_method ?? '' ) );
+		$sender_number  = esc_html( $data->sender_number ?? '' );
+		$transaction_id = esc_html( $data->transaction_id ?? '' );
+		$amount         = esc_html( $data->amount ?? '' );
+
+		echo wp_kses_post(
+			'<div class="form-field form-field-wide uddoktapay-admin-data">
+            <table class="wp-list-table widefat striped posts">
                 <tbody>
                     <tr>
                         <th>
-                            <strong>Payment Method</strong>
+                            <strong>' . esc_html__( 'Payment Method', 'uddoktapay-gateway' ) . '</strong>
                         </th>
-                        <td>
-                                {$payment_method}
-                        </td>
+                        <td>' . $payment_method . '</td>
                     </tr>
                     <tr>
                         <th>
-                            <strong>Sender Number</strong>
+                            <strong>' . esc_html__( 'Sender Number', 'uddoktapay-gateway' ) . '</strong>
                         </th>
-                        <td>
-                                {$sender_number}
-                        </td>
+                        <td>' . $sender_number . '</td>
                     </tr>
                     <tr>
                         <th>
-                            <strong>Transaction ID</strong>
+                            <strong>' . esc_html__( 'Transaction ID', 'uddoktapay-gateway' ) . '</strong>
                         </th>
-                        <td>
-                                {$transaction_id}
-                        </td>
+                        <td>' . $transaction_id . '</td>
                     </tr>
                     <tr>
                         <th>
-                            <strong>Amount</strong>
+                            <strong>' . esc_html__( 'Amount', 'uddoktapay-gateway' ) . '</strong>
                         </th>
-                        <td>
-                                {$amount}
-                        </td>
+                        <td>' . $amount . '</td>
                     </tr>
                 </tbody>
             </table>
-        </div>";
-    }
+        </div>'
+		);
+	}
 }

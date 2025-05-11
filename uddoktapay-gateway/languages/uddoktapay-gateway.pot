@@ -1,0 +1,331 @@
+# Copyright (C) 2025 UddoktaPay
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: UddoktaPay 2.5.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/uddoktapay-gateway\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-05-11T05:16:23+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: uddoktapay-gateway\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+#: uddoktapay-gateway.php
+#: src/LocalGateway.php:123
+msgid "UddoktaPay"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: uddoktapay-gateway.php
+msgid "https://uddoktapay.com"
+msgstr ""
+
+#. Description of the plugin
+#: uddoktapay-gateway.php
+msgid "Accept payments via bKash, Rocket, Nagad, Upay and International methods through UddoktaPay"
+msgstr ""
+
+#: src/Blocks/InternationalBlocks.php:52
+#: src/InternationalGateway.php:85
+#: src/InternationalGateway.php:179
+msgid "International Payment"
+msgstr ""
+
+#: src/Blocks/InternationalBlocks.php:53
+msgid "Pay with PayPal, Stripe, Paddle, Perfect Money"
+msgstr ""
+
+#: src/Blocks/LocalBlocks.php:52
+#: src/LocalGateway.php:85
+msgid "Mobile Banking"
+msgstr ""
+
+#: src/Blocks/LocalBlocks.php:53
+msgid "Pay with bKash, Rocket, Nagad, Upay"
+msgstr ""
+
+#: src/InternationalGateway.php:86
+msgid "Pay securely via International payment methods."
+msgstr ""
+
+#: src/InternationalGateway.php:123
+msgid "UddoktaPay International"
+msgstr ""
+
+#: src/InternationalGateway.php:129
+msgid "Accept international payments via multiple gateways including PayPal, Stripe, and more."
+msgstr ""
+
+#: src/InternationalGateway.php:131
+#: src/LocalGateway.php:131
+msgid "Sign up for UddoktaPay account"
+msgstr ""
+
+#: src/InternationalGateway.php:146
+#: src/LocalGateway.php:146
+msgid "UddoktaPay requires API Key and API URL to be configured."
+msgstr ""
+
+#: src/InternationalGateway.php:164
+#: src/LocalGateway.php:164
+msgid "Enable/Disable"
+msgstr ""
+
+#: src/InternationalGateway.php:166
+msgid "Enable UddoktaPay International Payment"
+msgstr ""
+
+#: src/InternationalGateway.php:170
+#: src/LocalGateway.php:170
+msgid "Show Icon"
+msgstr ""
+
+#: src/InternationalGateway.php:172
+#: src/LocalGateway.php:172
+msgid "Display icons on checkout page."
+msgstr ""
+
+#: src/InternationalGateway.php:176
+#: src/LocalGateway.php:176
+msgid "Title"
+msgstr ""
+
+#: src/InternationalGateway.php:178
+#: src/LocalGateway.php:178
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: src/InternationalGateway.php:183
+#: src/LocalGateway.php:183
+msgid "Description"
+msgstr ""
+
+#: src/InternationalGateway.php:185
+#: src/LocalGateway.php:185
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: src/InternationalGateway.php:186
+msgid "Pay securely via PayPal, Stripe, Paddle, Perfect Money."
+msgstr ""
+
+#: src/InternationalGateway.php:190
+#: src/LocalGateway.php:190
+msgid "API Key"
+msgstr ""
+
+#: src/InternationalGateway.php:192
+#: src/LocalGateway.php:192
+msgid "Get your API key from UddoktaPay Panel → Brand Settings."
+msgstr ""
+
+#: src/InternationalGateway.php:195
+#: src/LocalGateway.php:195
+msgid "API URL"
+msgstr ""
+
+#: src/InternationalGateway.php:197
+#: src/LocalGateway.php:197
+msgid "Get your API URL from UddoktaPay Panel → Brand Settings."
+msgstr ""
+
+#: src/InternationalGateway.php:200
+#: src/LocalGateway.php:200
+msgid "Physical Product Status"
+msgstr ""
+
+#: src/InternationalGateway.php:202
+#: src/LocalGateway.php:202
+msgid "Select status for physical product orders after successful payment."
+msgstr ""
+
+#: src/InternationalGateway.php:205
+#: src/InternationalGateway.php:216
+#: src/LocalGateway.php:205
+#: src/LocalGateway.php:216
+msgid "On Hold"
+msgstr ""
+
+#: src/InternationalGateway.php:206
+#: src/InternationalGateway.php:217
+#: src/LocalGateway.php:206
+#: src/LocalGateway.php:217
+msgid "Processing"
+msgstr ""
+
+#: src/InternationalGateway.php:207
+#: src/InternationalGateway.php:218
+#: src/LocalGateway.php:207
+#: src/LocalGateway.php:218
+msgid "Completed"
+msgstr ""
+
+#: src/InternationalGateway.php:211
+#: src/LocalGateway.php:211
+msgid "Digital Product Status"
+msgstr ""
+
+#: src/InternationalGateway.php:213
+#: src/LocalGateway.php:213
+msgid "Select status for digital/downloadable product orders after successful payment."
+msgstr ""
+
+#. translators: %s: Currency code
+#: src/InternationalGateway.php:228
+#, php-format
+msgid "%s to USD Exchange Rate"
+msgstr ""
+
+#: src/InternationalGateway.php:233
+msgid "This rate will be applied to convert the total amount to USD."
+msgstr ""
+
+#: src/InternationalGateway.php:244
+#: src/LocalGateway.php:244
+msgid "Debug Log"
+msgstr ""
+
+#: src/InternationalGateway.php:246
+#: src/LocalGateway.php:246
+msgid "Enable logging"
+msgstr ""
+
+#. translators: %s: Log file path
+#: src/InternationalGateway.php:250
+#: src/LocalGateway.php:250
+#, php-format
+msgid "Log gateway events inside %s"
+msgstr ""
+
+#: src/InternationalGateway.php:301
+#: src/LocalGateway.php:301
+msgid "Invalid order"
+msgstr ""
+
+#: src/InternationalGateway.php:322
+#: src/LocalGateway.php:322
+msgid "Payment URL not received"
+msgstr ""
+
+#: src/InternationalGateway.php:328
+#: src/LocalGateway.php:328
+msgid "Awaiting UddoktaPay payment"
+msgstr ""
+
+#: src/InternationalGateway.php:340
+#: src/InternationalGateway.php:362
+#: src/LocalGateway.php:340
+#: src/LocalGateway.php:362
+msgid "Something went wrong"
+msgstr ""
+
+#: src/InternationalGateway.php:377
+#: src/LocalGateway.php:377
+msgid "Invalid order data received"
+msgstr ""
+
+#: src/InternationalGateway.php:382
+#: src/InternationalGateway.php:417
+#: src/LocalGateway.php:382
+#: src/LocalGateway.php:417
+msgid "Order not found"
+msgstr ""
+
+#: src/InternationalGateway.php:402
+#: src/LocalGateway.php:402
+msgid "Empty webhook payload"
+msgstr ""
+
+#: src/InternationalGateway.php:406
+#: src/LocalGateway.php:406
+msgid "Invalid webhook signature"
+msgstr ""
+
+#: src/InternationalGateway.php:412
+#: src/LocalGateway.php:412
+msgid "Order ID not found in webhook data"
+msgstr ""
+
+#: src/InternationalGateway.php:453
+#: src/LocalGateway.php:453
+msgid "Payment is on hold. Please check manually."
+msgstr ""
+
+#. translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID
+#: src/InternationalGateway.php:473
+#: src/LocalGateway.php:473
+#, php-format
+msgid "Payment via %1$s. Amount: %2$s, Transaction ID: %3$s"
+msgstr ""
+
+#: src/InternationalGateway.php:540
+#: src/LocalGateway.php:547
+msgid "Payment Method"
+msgstr ""
+
+#: src/InternationalGateway.php:546
+#: src/LocalGateway.php:553
+msgid "Sender Number"
+msgstr ""
+
+#: src/InternationalGateway.php:552
+#: src/LocalGateway.php:559
+msgid "Transaction ID"
+msgstr ""
+
+#: src/InternationalGateway.php:558
+#: src/LocalGateway.php:565
+msgid "Amount"
+msgstr ""
+
+#: src/LocalGateway.php:86
+#: src/LocalGateway.php:186
+msgid "Pay securely via Bangladeshi payment methods."
+msgstr ""
+
+#: src/LocalGateway.php:129
+msgid "Accept Bangladeshi payments via multiple gateways including bKash, Nagad, Rocket and more."
+msgstr ""
+
+#: src/LocalGateway.php:166
+msgid "Enable UddoktaPay"
+msgstr ""
+
+#: src/LocalGateway.php:179
+msgid "Bangladeshi Payment"
+msgstr ""
+
+#. translators: %s: Currency code
+#: src/LocalGateway.php:228
+#, php-format
+msgid "%s to BDT Exchange Rate"
+msgstr ""
+
+#: src/LocalGateway.php:233
+msgid "This rate will be applied to convert the total amount to BDT."
+msgstr ""
+
+#. Translators: %1$s is the plugin name, %2$s is the required plugin name.
+#: uddoktapay-gateway.php:108
+#, php-format
+msgid "%1$s requires %2$s to be installed and activated."
+msgstr ""
+
+#: uddoktapay-gateway.php:194
+msgid "BD Methods Settings"
+msgstr ""
+
+#: uddoktapay-gateway.php:199
+msgid "Global Methods Settings"
+msgstr ""
+
+#: uddoktapay-gateway.php:204
+msgid "Purchase License"
+msgstr ""
