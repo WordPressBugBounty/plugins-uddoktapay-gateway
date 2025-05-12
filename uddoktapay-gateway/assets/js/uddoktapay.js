@@ -24,11 +24,21 @@ const UddoktaPayBlock = {
     label: uddoktapay_show_icon
         ? createElement(
             'span',
-            { style: { display: 'flex', alignItems: 'center', gap: '8px' } },
-            createElement('span', null, uddoktapay_label),
+            {
+                style: {
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '8px',
+                    flexWrap: 'wrap',
+                }
+            },
+            createElement('span', {
+                style: { flex: '1 1 auto', minWidth: 0 }
+            }, uddoktapay_label),
             createElement('img', {
                 src: uddoktapay_icon,
-                alt: uddoktapay_label
+                alt: uddoktapay_label,
+                style: { maxHeight: '30px', flexShrink: 0 }
             })
         )
         : uddoktapay_label,
@@ -56,11 +66,21 @@ const UddoktaPayInternationalBlock = {
     label: uddoktapay_international_show_icon
         ? createElement(
             'span',
-            { style: { display: 'flex', alignItems: 'center', gap: '8px' } },
-            createElement('span', null, uddoktapay_international_label),
+            {
+                style: {
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '8px',
+                    flexWrap: 'wrap',
+                }
+            },
+            createElement('span', {
+                style: { flex: '1 1 auto', minWidth: 0 }
+            }, uddoktapay_international_label),
             createElement('img', {
                 src: uddoktapay_international_icon,
-                alt: uddoktapay_international_label
+                alt: uddoktapay_international_label,
+                style: { maxHeight: '30px', flexShrink: 0 }
             })
         )
         : uddoktapay_international_label,

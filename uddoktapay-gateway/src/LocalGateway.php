@@ -336,8 +336,14 @@ class LocalGateway extends \WC_Payment_Gateway {
 				'redirect' => $result->payment_url,
 			);
 
-		} catch ( \Exception ) {
-			throw new \Exception( esc_html__( 'Something went wrong', 'uddoktapay-gateway' ) );
+		} catch ( \Exception $e ) {
+			throw new \Exception(
+				sprintf(
+					/* translators: %s: Error message */
+					esc_html__( 'An error occurred: %s', 'uddoktapay-gateway' ),
+					esc_html( $e->getMessage() )
+				)
+			);
 		}
 	}
 
@@ -359,7 +365,15 @@ class LocalGateway extends \WC_Payment_Gateway {
 				$this->handle_webhook_notification();
 			}
 		} catch ( \Exception $e ) {
-			wp_die( esc_html( __( 'Something went wrong', 'uddoktapay-gateway' ) ), 'UddoktaPay Webhook Error', array( 'response' => 500 ) );
+			wp_die(
+				sprintf(
+					/* translators: %s: Error message */
+					esc_html__( 'Error processing webhook: %s', 'uddoktapay-gateway' ),
+					esc_html( $e->getMessage() )
+				),
+				'UddoktaPay Webhook Error',
+				array( 'response' => 500 )
+			);
 		}
 	}
 

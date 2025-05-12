@@ -1,4 +1,6 @@
 .wc_payment_methods li label img {
     height: 30px !important;
-    float: right;
+    max-width: 100%;
+    flex-shrink: 0;
+    margin-left: auto;
 }

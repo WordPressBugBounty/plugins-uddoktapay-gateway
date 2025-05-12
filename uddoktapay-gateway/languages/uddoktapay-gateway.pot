@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: UddoktaPay 2.5.1\n"
+"Project-Id-Version: UddoktaPay 2.5.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/uddoktapay-gateway\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-11T05:16:23+00:00\n"
+"POT-Creation-Date: 2025-05-12T00:28:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: uddoktapay-gateway\n"
@@ -187,6 +187,7 @@ msgstr ""
 msgid "This rate will be applied to convert the total amount to USD."
 msgstr ""
 
+#. Translators: %s: Log file path.
 #: src/InternationalGateway.php:244
 #: src/LocalGateway.php:244
 msgid "Debug Log"
@@ -219,69 +220,76 @@ msgstr ""
 msgid "Awaiting UddoktaPay payment"
 msgstr ""
 
-#: src/InternationalGateway.php:340
-#: src/InternationalGateway.php:362
-#: src/LocalGateway.php:340
-#: src/LocalGateway.php:362
-msgid "Something went wrong"
+#. translators: %s: Error message
+#: src/InternationalGateway.php:343
+#: src/LocalGateway.php:343
+#, php-format
+msgid "An error occurred: %s"
 msgstr ""
 
-#: src/InternationalGateway.php:377
-#: src/LocalGateway.php:377
+#. translators: %s: Error message
+#: src/InternationalGateway.php:371
+#: src/LocalGateway.php:371
+#, php-format
+msgid "Error processing webhook: %s"
+msgstr ""
+
+#: src/InternationalGateway.php:391
+#: src/LocalGateway.php:391
 msgid "Invalid order data received"
 msgstr ""
 
-#: src/InternationalGateway.php:382
-#: src/InternationalGateway.php:417
-#: src/LocalGateway.php:382
-#: src/LocalGateway.php:417
+#: src/InternationalGateway.php:396
+#: src/InternationalGateway.php:431
+#: src/LocalGateway.php:396
+#: src/LocalGateway.php:431
 msgid "Order not found"
 msgstr ""
 
-#: src/InternationalGateway.php:402
-#: src/LocalGateway.php:402
+#: src/InternationalGateway.php:416
+#: src/LocalGateway.php:416
 msgid "Empty webhook payload"
 msgstr ""
 
-#: src/InternationalGateway.php:406
-#: src/LocalGateway.php:406
+#: src/InternationalGateway.php:420
+#: src/LocalGateway.php:420
 msgid "Invalid webhook signature"
 msgstr ""
 
-#: src/InternationalGateway.php:412
-#: src/LocalGateway.php:412
+#: src/InternationalGateway.php:426
+#: src/LocalGateway.php:426
 msgid "Order ID not found in webhook data"
 msgstr ""
 
-#: src/InternationalGateway.php:453
-#: src/LocalGateway.php:453
+#: src/InternationalGateway.php:467
+#: src/LocalGateway.php:467
 msgid "Payment is on hold. Please check manually."
 msgstr ""
 
 #. translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID
-#: src/InternationalGateway.php:473
-#: src/LocalGateway.php:473
+#: src/InternationalGateway.php:487
+#: src/LocalGateway.php:487
 #, php-format
 msgid "Payment via %1$s. Amount: %2$s, Transaction ID: %3$s"
 msgstr ""
 
-#: src/InternationalGateway.php:540
-#: src/LocalGateway.php:547
+#: src/InternationalGateway.php:554
+#: src/LocalGateway.php:561
 msgid "Payment Method"
 msgstr ""
 
-#: src/InternationalGateway.php:546
-#: src/LocalGateway.php:553
+#: src/InternationalGateway.php:560
+#: src/LocalGateway.php:567
 msgid "Sender Number"
 msgstr ""
 
-#: src/InternationalGateway.php:552
-#: src/LocalGateway.php:559
+#: src/InternationalGateway.php:566
+#: src/LocalGateway.php:573
 msgid "Transaction ID"
 msgstr ""
 
-#: src/InternationalGateway.php:558
-#: src/LocalGateway.php:565
+#: src/InternationalGateway.php:572
+#: src/LocalGateway.php:579
 msgid "Amount"
 msgstr ""
 
