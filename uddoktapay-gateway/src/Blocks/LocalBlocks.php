@@ -52,7 +52,7 @@ class LocalBlocks extends \Automattic\WooCommerce\Blocks\Payments\Integrations\A
 			'title'       => $this->settings['title'] ?? __( 'Mobile Banking', 'uddoktapay-gateway' ),
 			'description' => $this->settings['description'] ?? __( 'Pay with bKash, Rocket, Nagad, Upay', 'uddoktapay-gateway' ),
 			'icon'        => UDDOKTAPAY_URL . 'assets/images/uddoktapay.png',
-			'show_icon'   => 'yes' === $this->settings['show_icon'],
+			'show_icon'   => 'yes' === $this->settings['show_icon'] ?? 'no',
 			'supports'    => array(
 				'products',
 			),
@@ -65,7 +65,7 @@ class LocalBlocks extends \Automattic\WooCommerce\Blocks\Payments\Integrations\A
 	 * @return bool
 	 */
 	public function is_active() {
-		return 'yes' === $this->settings['enabled'] && ! empty( $this->settings['enabled'] );
+		return ! empty( $this->settings['enabled'] ) && 'yes' === $this->settings['enabled'];
 	}
 
 	/**

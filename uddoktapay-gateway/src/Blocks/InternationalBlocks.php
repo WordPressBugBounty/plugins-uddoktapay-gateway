@@ -52,7 +52,7 @@ class InternationalBlocks extends \Automattic\WooCommerce\Blocks\Payments\Integr
 			'title'       => $this->settings['title'] ?? __( 'International Payment', 'uddoktapay-gateway' ),
 			'description' => $this->settings['description'] ?? __( 'Pay with PayPal, Stripe, Paddle, Perfect Money', 'uddoktapay-gateway' ),
 			'icon'        => UDDOKTAPAY_URL . 'assets/images/uddoktapay-international.png',
-			'show_icon'   => 'yes' === $this->settings['show_icon'],
+			'show_icon'   => 'yes' === $this->settings['show_icon'] ?? 'no',
 			'supports'    => array(
 				'products',
 			),
@@ -65,7 +65,7 @@ class InternationalBlocks extends \Automattic\WooCommerce\Blocks\Payments\Integr
 	 * @return bool
 	 */
 	public function is_active() {
-		return 'yes' === $this->settings['enabled'] && ! empty( $this->settings['enabled'] );
+		return ! empty( $this->settings['enabled'] ) && 'yes' === $this->settings['enabled'];
 	}
 
 	/**
