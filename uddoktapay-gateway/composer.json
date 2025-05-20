@@ -1,6 +1,7 @@
 {
     "name": "uddoktapay/uddoktapay-gateway",
     "description": "Accept payments via bKash, Rocket, Nagad, Upay and International methods through UddoktaPay",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
