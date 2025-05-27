@@ -9,7 +9,7 @@
  * @since 1.0.0
  */
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace UddoktaPay\UddoktaPayGateway;
 
@@ -27,6 +27,7 @@ defined( 'ABSPATH' ) || exit( 'Direct access is not allowed.' );
  * @since 1.0.0
  */
 class LocalGateway extends \WC_Payment_Gateway {
+
 
 	/**
 	 * API Handler instance
@@ -160,43 +161,43 @@ class LocalGateway extends \WC_Payment_Gateway {
 		$currency = get_woocommerce_currency();
 
 		$base_fields = array(
-			'enabled'                 => array(
+			'enabled'                     => array(
 				'title'   => __( 'Enable/Disable', 'uddoktapay-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable UddoktaPay', 'uddoktapay-gateway' ),
 				'default' => 'no',
 			),
-			'show_icon'               => array(
+			'show_icon'                   => array(
 				'title'   => __( 'Show Icon', 'uddoktapay-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Display icons on checkout page.', 'uddoktapay-gateway' ),
 				'default' => 'no',
 			),
-			'title'                   => array(
+			'title'                       => array(
 				'title'       => __( 'Title', 'uddoktapay-gateway' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'uddoktapay-gateway' ),
 				'default'     => __( 'Bangladeshi Payment', 'uddoktapay-gateway' ),
 				'desc_tip'    => true,
 			),
-			'description'             => array(
+			'description'                 => array(
 				'title'       => __( 'Description', 'uddoktapay-gateway' ),
 				'type'        => 'textarea',
 				'description' => __( 'This controls the description which the user sees during checkout.', 'uddoktapay-gateway' ),
 				'default'     => __( 'Pay securely via Bangladeshi payment methods.', 'uddoktapay-gateway' ),
 				'desc_tip'    => true,
 			),
-			'api_key'                 => array(
+			'api_key'                     => array(
 				'title'       => __( 'API Key', 'uddoktapay-gateway' ),
 				'type'        => 'password',
 				'description' => __( 'Get your API key from UddoktaPay Panel → Brand Settings.', 'uddoktapay-gateway' ),
 			),
-			'api_url'                 => array(
+			'api_url'                     => array(
 				'title'       => __( 'API URL', 'uddoktapay-gateway' ),
 				'type'        => 'url',
 				'description' => __( 'Get your API URL from UddoktaPay Panel → Brand Settings.', 'uddoktapay-gateway' ),
 			),
-			'physical_product_status' => array(
+			'physical_product_status'     => array(
 				'title'       => __( 'Physical Product Status', 'uddoktapay-gateway' ),
 				'type'        => 'select',
 				'description' => __( 'Select status for physical product orders after successful payment.', 'uddoktapay-gateway' ),
@@ -207,10 +208,21 @@ class LocalGateway extends \WC_Payment_Gateway {
 					OrderStatus::COMPLETED  => __( 'Completed', 'uddoktapay-gateway' ),
 				),
 			),
-			'digital_product_status'  => array(
-				'title'       => __( 'Digital Product Status', 'uddoktapay-gateway' ),
+			'virtual_product_status'      => array(
+				'title'       => __( 'Virtual Product Status', 'uddoktapay-gateway' ),
 				'type'        => 'select',
-				'description' => __( 'Select status for digital/downloadable product orders after successful payment.', 'uddoktapay-gateway' ),
+				'description' => __( 'Select status for virtual product orders after successful payment.', 'uddoktapay-gateway' ),
+				'default'     => OrderStatus::COMPLETED,
+				'options'     => array(
+					OrderStatus::ON_HOLD    => __( 'On Hold', 'uddoktapay-gateway' ),
+					OrderStatus::PROCESSING => __( 'Processing', 'uddoktapay-gateway' ),
+					OrderStatus::COMPLETED  => __( 'Completed', 'uddoktapay-gateway' ),
+				),
+			),
+			'downloadable_product_status' => array(
+				'title'       => __( 'Downloadable Product Status', 'uddoktapay-gateway' ),
+				'type'        => 'select',
+				'description' => __( 'Select status for downloadable product orders after successful payment.', 'uddoktapay-gateway' ),
 				'default'     => OrderStatus::COMPLETED,
 				'options'     => array(
 					OrderStatus::ON_HOLD    => __( 'On Hold', 'uddoktapay-gateway' ),
@@ -355,9 +367,9 @@ class LocalGateway extends \WC_Payment_Gateway {
 	public function handle_webhook() {
 		try {
 			// Verify nonce is not applicable here as this is an external API callback.
-			// phpcs:disable WordPress.Security.NonceVerification.Recommended
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
 			$invoice_id = isset( $_GET['invoice_id'] ) ? sanitize_text_field( wp_unslash( $_GET['invoice_id'] ) ) : '';
-			// phpcs:enable WordPress.Security.NonceVerification.Recommended
+            // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 			if ( ! empty( $invoice_id ) ) {
 				$this->handle_redirect_verification( $invoice_id );
@@ -398,7 +410,7 @@ class LocalGateway extends \WC_Payment_Gateway {
 
 		$this->process_order_status( $order, $result );
 
-		// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+        // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 		wp_redirect( $result->metadata->redirect_url );
 		exit;
 	}
@@ -479,7 +491,7 @@ class LocalGateway extends \WC_Payment_Gateway {
 	 * @return void
 	 */
 	protected function handle_completed_payment( $order, $data ) {
-		$status = $this->is_order_virtual( $order ) ? $this->get_option( 'digital_product_status', OrderStatus::COMPLETED ) : $this->get_option( 'physical_product_status', OrderStatus::PROCESSING );
+		$status = $this->get_order_status_by_type( $order );
 
 		// Translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID.
 		$note = sprintf(
@@ -495,23 +507,119 @@ class LocalGateway extends \WC_Payment_Gateway {
 	}
 
 	/**
-	 * Check if order is virtual.
+	 * Get order status based on product type.
+	 *
+	 * This method follows WooCommerce's logic where products can be:
+	 * - Virtual only (services, subscriptions)
+	 * - Downloadable only (rare - files with shipping)
+	 * - Both Virtual AND Downloadable (digital files without shipping)
+	 * - Physical (default products)
 	 *
 	 * @param \WC_Order $order The order object.
-	 * @return bool
+	 * @return string
 	 */
-	protected function is_order_virtual( $order ) {
-		$virtual = false;
+	protected function get_order_status_by_type( $order ) {
+		$all_virtual_and_downloadable = true;
+		$all_virtual_only             = true;
+		$all_downloadable_only        = true;
+		$has_physical                 = false;
 
 		foreach ( $order->get_items() as $item ) {
 			$product = $item->get_product();
-			if ( $product && ( $product->is_virtual() || $product->is_downloadable() ) ) {
-				$virtual = true;
+			if ( ! $product ) {
+				continue;
+			}
+
+			$is_virtual      = $product->is_virtual();
+			$is_downloadable = $product->is_downloadable();
+
+			// Check for physical products.
+			if ( ! $is_virtual && ! $is_downloadable ) {
+				$has_physical                 = true;
+				$all_virtual_and_downloadable = false;
+				$all_virtual_only             = false;
+				$all_downloadable_only        = false;
+			}
+
+			// Check if ALL products are both virtual AND downloadable.
+			if ( ! ( $is_virtual && $is_downloadable ) ) {
+				$all_virtual_and_downloadable = false;
+			}
+
+			// Check if ALL products are virtual only (not downloadable).
+			if ( ! ( $is_virtual && ! $is_downloadable ) ) {
+				$all_virtual_only = false;
+			}
+
+			// Check if ALL products are downloadable only (not virtual).
+			if ( ! ( $is_downloadable && ! $is_virtual ) ) {
+				$all_downloadable_only = false;
+			}
+		}
+
+		// Physical products take precedence (most restrictive).
+		if ( $has_physical ) {
+			return $this->get_option( 'physical_product_status', OrderStatus::PROCESSING );
+		}
+
+		// All products are both virtual AND downloadable.
+		if ( $all_virtual_and_downloadable ) {
+			return $this->get_option( 'downloadable_product_status', OrderStatus::COMPLETED );
+		}
+
+		// All products are virtual only (no downloads).
+		if ( $all_virtual_only ) {
+			return $this->get_option( 'virtual_product_status', OrderStatus::COMPLETED );
+		}
+
+		// All products are downloadable only (with shipping - rare case).
+		if ( $all_downloadable_only ) {
+			return $this->get_option( 'downloadable_product_status', OrderStatus::COMPLETED );
+		}
+
+		// If we have a mix of virtual-only and downloadable-only products.
+		return $this->get_option( 'virtual_product_status', OrderStatus::COMPLETED );
+	}
+
+	/**
+	 * Check if order contains only virtual products.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @return bool
+	 * @deprecated Use get_order_status_by_type() instead.
+	 */
+	protected function is_order_virtual( $order ) {
+		$virtual = true;
+
+		foreach ( $order->get_items() as $item ) {
+			$product = $item->get_product();
+			if ( $product && ! $product->is_virtual() ) {
+				$virtual = false;
 				break;
 			}
 		}
 
 		return $virtual;
+	}
+
+	/**
+	 * Check if order contains only downloadable products.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @return bool
+	 */
+	protected function is_order_downloadable( $order ) {
+		$downloadable = true;
+
+		foreach ( $order->get_items() as $item ) {
+			$product = $item->get_product();
+			if ( $product && ! $product->is_downloadable() ) {
+				$downloadable = false;
+				break;
+			}
+		}
+
+		return $downloadable;
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * Plugin Name:    UddoktaPay
  * Plugin URI:     https://uddoktapay.com
  * Description:    Accept payments via bKash, Rocket, Nagad, Upay and International methods through UddoktaPay
- * Version:        2.5.5
+ * Version:        2.5.6
  * Author:         UddoktaPay
  * Author URI:     https://uddoktapay.com
  * License:        GPL v2 or later
@@ -17,7 +17,7 @@
 defined( 'ABSPATH' ) || exit( 'Direct access is not allowed.' );
 
 // Define constants.
-define( 'UDDOKTAPAY_VERSION', '2.5.5' );
+define( 'UDDOKTAPAY_VERSION', '2.5.6' );
 define( 'UDDOKTAPAY_FILE', __FILE__ );
 define( 'UDDOKTAPAY_PATH', plugin_dir_path( UDDOKTAPAY_FILE ) );
 define( 'UDDOKTAPAY_URL', plugin_dir_url( UDDOKTAPAY_FILE ) );

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'uddoktapay/uddoktapay-gateway',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'c622f4276600a7c39af58ef9ce8e9e2b5608877f',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'uddoktapay/uddoktapay-gateway' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'c622f4276600a7c39af58ef9ce8e9e2b5608877f',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
