@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: UddoktaPay 2.5.6\n"
+"Project-Id-Version: UddoktaPay 2.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/uddoktapay-gateway\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-27T15:45:01+00:00\n"
+"POT-Creation-Date: 2025-07-08T06:12:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: uddoktapay-gateway\n"
@@ -149,27 +149,33 @@ msgstr ""
 #: src/InternationalGateway.php:206
 #: src/InternationalGateway.php:217
 #: src/InternationalGateway.php:228
+#: src/InternationalGateway.php:239
 #: src/LocalGateway.php:206
 #: src/LocalGateway.php:217
 #: src/LocalGateway.php:228
+#: src/LocalGateway.php:239
 msgid "On Hold"
 msgstr ""
 
 #: src/InternationalGateway.php:207
 #: src/InternationalGateway.php:218
 #: src/InternationalGateway.php:229
+#: src/InternationalGateway.php:240
 #: src/LocalGateway.php:207
 #: src/LocalGateway.php:218
 #: src/LocalGateway.php:229
+#: src/LocalGateway.php:240
 msgid "Processing"
 msgstr ""
 
 #: src/InternationalGateway.php:208
 #: src/InternationalGateway.php:219
 #: src/InternationalGateway.php:230
+#: src/InternationalGateway.php:241
 #: src/LocalGateway.php:208
 #: src/LocalGateway.php:219
 #: src/LocalGateway.php:230
+#: src/LocalGateway.php:241
 msgid "Completed"
 msgstr ""
 
@@ -193,118 +199,133 @@ msgstr ""
 msgid "Select status for downloadable product orders after successful payment."
 msgstr ""
 
+#: src/InternationalGateway.php:234
+#: src/LocalGateway.php:234
+msgid "Backorder Product Status"
+msgstr ""
+
+#: src/InternationalGateway.php:236
+#: src/LocalGateway.php:236
+msgid "Select status for backorder product orders after successful payment."
+msgstr ""
+
 #. translators: %s: Currency code
-#: src/InternationalGateway.php:240
+#: src/InternationalGateway.php:251
 #, php-format
 msgid "%s to USD Exchange Rate"
 msgstr ""
 
-#: src/InternationalGateway.php:245
+#: src/InternationalGateway.php:256
 msgid "This rate will be applied to convert the total amount to USD."
 msgstr ""
 
-#: src/InternationalGateway.php:256
-#: src/LocalGateway.php:256
+#: src/InternationalGateway.php:267
+#: src/LocalGateway.php:267
 msgid "Debug Log"
 msgstr ""
 
-#: src/InternationalGateway.php:258
-#: src/LocalGateway.php:258
+#: src/InternationalGateway.php:269
+#: src/LocalGateway.php:269
 msgid "Enable logging"
 msgstr ""
 
 #. translators: %s: Log file path
-#: src/InternationalGateway.php:262
-#: src/LocalGateway.php:262
+#: src/InternationalGateway.php:273
+#: src/LocalGateway.php:273
 #, php-format
 msgid "Log gateway events inside %s"
 msgstr ""
 
-#: src/InternationalGateway.php:313
-#: src/LocalGateway.php:313
+#: src/InternationalGateway.php:324
+#: src/LocalGateway.php:324
 msgid "Invalid order"
 msgstr ""
 
-#: src/InternationalGateway.php:334
-#: src/LocalGateway.php:334
+#: src/InternationalGateway.php:345
+#: src/LocalGateway.php:345
 msgid "Payment URL not received"
 msgstr ""
 
-#: src/InternationalGateway.php:340
-#: src/LocalGateway.php:340
+#: src/InternationalGateway.php:351
+#: src/LocalGateway.php:351
 msgid "Awaiting UddoktaPay payment"
 msgstr ""
 
 #. translators: %s: Error message
-#: src/InternationalGateway.php:355
-#: src/LocalGateway.php:355
+#: src/InternationalGateway.php:366
+#: src/LocalGateway.php:366
 #, php-format
 msgid "An error occurred: %s"
 msgstr ""
 
 #. translators: %s: Error message
-#: src/InternationalGateway.php:383
-#: src/LocalGateway.php:383
+#: src/InternationalGateway.php:394
+#: src/LocalGateway.php:394
 #, php-format
 msgid "Error processing webhook: %s"
 msgstr ""
 
-#: src/InternationalGateway.php:403
-#: src/LocalGateway.php:403
+#: src/InternationalGateway.php:414
+#: src/LocalGateway.php:414
 msgid "Invalid order data received"
 msgstr ""
 
-#: src/InternationalGateway.php:408
-#: src/InternationalGateway.php:443
-#: src/LocalGateway.php:408
-#: src/LocalGateway.php:443
+#: src/InternationalGateway.php:419
+#: src/InternationalGateway.php:454
+#: src/LocalGateway.php:419
+#: src/LocalGateway.php:454
 msgid "Order not found"
 msgstr ""
 
-#: src/InternationalGateway.php:428
-#: src/LocalGateway.php:428
+#: src/InternationalGateway.php:439
+#: src/LocalGateway.php:439
 msgid "Empty webhook payload"
 msgstr ""
 
-#: src/InternationalGateway.php:432
-#: src/LocalGateway.php:432
+#: src/InternationalGateway.php:443
+#: src/LocalGateway.php:443
 msgid "Invalid webhook signature"
 msgstr ""
 
-#: src/InternationalGateway.php:438
-#: src/LocalGateway.php:438
+#: src/InternationalGateway.php:449
+#: src/LocalGateway.php:449
 msgid "Order ID not found in webhook data"
 msgstr ""
 
-#: src/InternationalGateway.php:479
-#: src/LocalGateway.php:479
+#: src/InternationalGateway.php:490
+#: src/LocalGateway.php:490
 msgid "Payment is on hold. Please check manually."
 msgstr ""
 
 #. translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID
-#: src/InternationalGateway.php:499
-#: src/LocalGateway.php:499
+#: src/InternationalGateway.php:600
+#: src/LocalGateway.php:600
 #, php-format
 msgid "Payment via %1$s. Amount: %2$s, Transaction ID: %3$s"
 msgstr ""
 
-#: src/InternationalGateway.php:662
-#: src/LocalGateway.php:669
+#: src/InternationalGateway.php:620
+#: src/LocalGateway.php:620
+msgid "Order contains backordered items. Items will be shipped when stock becomes available."
+msgstr ""
+
+#: src/InternationalGateway.php:704
+#: src/LocalGateway.php:711
 msgid "Payment Method"
 msgstr ""
 
-#: src/InternationalGateway.php:668
-#: src/LocalGateway.php:675
+#: src/InternationalGateway.php:710
+#: src/LocalGateway.php:717
 msgid "Sender Number"
 msgstr ""
 
-#: src/InternationalGateway.php:674
-#: src/LocalGateway.php:681
+#: src/InternationalGateway.php:716
+#: src/LocalGateway.php:723
 msgid "Transaction ID"
 msgstr ""
 
-#: src/InternationalGateway.php:680
-#: src/LocalGateway.php:687
+#: src/InternationalGateway.php:722
+#: src/LocalGateway.php:729
 msgid "Amount"
 msgstr ""
 
@@ -326,12 +347,12 @@ msgid "Bangladeshi Payment"
 msgstr ""
 
 #. translators: %s: Currency code
-#: src/LocalGateway.php:240
+#: src/LocalGateway.php:251
 #, php-format
 msgid "%s to BDT Exchange Rate"
 msgstr ""
 
-#: src/LocalGateway.php:245
+#: src/LocalGateway.php:256
 msgid "This rate will be applied to convert the total amount to BDT."
 msgstr ""
 

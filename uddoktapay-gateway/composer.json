@@ -20,7 +20,8 @@
     "scripts": {
         "phpcs": "phpcs",
         "phpcbf": "phpcbf",
-        "pot": "wp i18n make-pot . languages/uddoktapay-gateway.pot"
+        "pot": "wp i18n make-pot . languages/uddoktapay-gateway.pot",
+        "install-production": "composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction"
     },
     "config": {
         "allow-plugins": {

@@ -3,7 +3,7 @@
         'name' => 'uddoktapay/uddoktapay-gateway',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'c622f4276600a7c39af58ef9ce8e9e2b5608877f',
+        'reference' => 'a0870f2a089b4670dba5cbe0d661d568325b4678',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'uddoktapay/uddoktapay-gateway' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c622f4276600a7c39af58ef9ce8e9e2b5608877f',
+            'reference' => 'a0870f2a089b4670dba5cbe0d661d568325b4678',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

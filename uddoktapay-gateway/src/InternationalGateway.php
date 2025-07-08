@@ -230,6 +230,17 @@ class InternationalGateway extends \WC_Payment_Gateway {
 					OrderStatus::COMPLETED  => __( 'Completed', 'uddoktapay-gateway' ),
 				),
 			),
+			'backorder_product_status'    => array(
+				'title'       => __( 'Backorder Product Status', 'uddoktapay-gateway' ),
+				'type'        => 'select',
+				'description' => __( 'Select status for backorder product orders after successful payment.', 'uddoktapay-gateway' ),
+				'default'     => OrderStatus::ON_HOLD,
+				'options'     => array(
+					OrderStatus::ON_HOLD    => __( 'On Hold', 'uddoktapay-gateway' ),
+					OrderStatus::PROCESSING => __( 'Processing', 'uddoktapay-gateway' ),
+					OrderStatus::COMPLETED  => __( 'Completed', 'uddoktapay-gateway' ),
+				),
+			),
 		);
 
 		if ( 'USD' !== $currency ) {
@@ -484,36 +495,14 @@ class InternationalGateway extends \WC_Payment_Gateway {
 	}
 
 	/**
-	 * Handle completed payment.
-	 *
-	 * @param \WC_Order $order The order object.
-	 * @param object    $data  The payment data.
-	 * @return void
-	 */
-	protected function handle_completed_payment( $order, $data ) {
-		$status = $this->get_order_status_by_type( $order );
-
-		// Translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID.
-		$note = sprintf(
-			/* translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID */
-			__( 'Payment via %1$s. Amount: %2$s, Transaction ID: %3$s', 'uddoktapay-gateway' ),
-			$data->payment_method,
-			$data->amount,
-			$data->transaction_id
-		);
-
-		$order->payment_complete( $data->transaction_id );
-		$order->update_status( $status, $note );
-	}
-
-	/**
-	 * Get order status based on product type.
+	 * Get order status based on product type and stock availability.
 	 *
 	 * This method follows WooCommerce's logic where products can be:
 	 * - Virtual only (services, subscriptions)
 	 * - Downloadable only (rare - files with shipping)
 	 * - Both Virtual AND Downloadable (digital files without shipping)
 	 * - Physical (default products)
+	 * - Backordered (when stock is not available but backorders are allowed)
 	 *
 	 * @param \WC_Order $order The order object.
 	 * @return string
@@ -523,6 +512,7 @@ class InternationalGateway extends \WC_Payment_Gateway {
 		$all_virtual_only             = true;
 		$all_downloadable_only        = true;
 		$has_physical                 = false;
+		$has_backorder                = false;
 
 		foreach ( $order->get_items() as $item ) {
 			$product = $item->get_product();
@@ -532,6 +522,17 @@ class InternationalGateway extends \WC_Payment_Gateway {
 
 			$is_virtual      = $product->is_virtual();
 			$is_downloadable = $product->is_downloadable();
+
+			// Check for backorder status.
+			if ( $product->is_on_backorder() ) {
+				$has_backorder = true;
+			}
+
+			// Alternative backorder check (more comprehensive)
+			// You can use this instead of or in addition to is_on_backorder().
+			if ( ! $product->is_in_stock() && $product->backorders_allowed() ) {
+				$has_backorder = true;
+			}
 
 			// Check for physical products.
 			if ( ! $is_virtual && ! $is_downloadable ) {
@@ -557,7 +558,12 @@ class InternationalGateway extends \WC_Payment_Gateway {
 			}
 		}
 
-		// Physical products take precedence (most restrictive).
+		// Backorder takes highest precedence (most restrictive).
+		if ( $has_backorder ) {
+			return $this->get_option( 'backorder_product_status', OrderStatus::ON_HOLD );
+		}
+
+		// Physical products take precedence (most restrictive after backorder).
 		if ( $has_physical ) {
 			return $this->get_option( 'physical_product_status', OrderStatus::PROCESSING );
 		}
@@ -582,44 +588,80 @@ class InternationalGateway extends \WC_Payment_Gateway {
 	}
 
 	/**
-	 * Check if order contains only virtual products.
+	 * Handle completed payment with proper backorder consideration.
 	 *
 	 * @param \WC_Order $order The order object.
-	 * @return bool
-	 * @deprecated Use get_order_status_by_type() instead.
+	 * @param object    $data Payment data containing transaction details.
 	 */
-	protected function is_order_virtual( $order ) {
-		$virtual = true;
+	protected function handle_completed_payment( $order, $data ) {
+		// Translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID.
+		$note = sprintf(
+		/* translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID */
+			__( 'Payment via %1$s. Amount: %2$s, Transaction ID: %3$s', 'uddoktapay-gateway' ),
+			$data->payment_method,
+			$data->amount,
+			$data->transaction_id
+		);
 
-		foreach ( $order->get_items() as $item ) {
-			$product = $item->get_product();
-			if ( $product && ! $product->is_virtual() ) {
-				$virtual = false;
-				break;
-			}
+		// Hook into WooCommerce's payment complete status filter.
+		add_filter( 'woocommerce_payment_complete_order_status', array( $this, 'filter_payment_complete_order_status' ), 10, 3 );
+
+		// Use WooCommerce's payment_complete which handles the logic.
+		$order->payment_complete( $data->transaction_id );
+
+		// Remove the filter to avoid affecting other orders.
+		remove_filter( 'woocommerce_payment_complete_order_status', array( $this, 'filter_payment_complete_order_status' ), 10 );
+
+		// Add our custom note.
+		$order->add_order_note( $note );
+
+		// Add backorder note if applicable.
+		if ( $this->has_backorder_items( $order ) ) {
+			$backorder_note = __( 'Order contains backordered items. Items will be shipped when stock becomes available.', 'uddoktapay-gateway' );
+			$order->add_order_note( $backorder_note );
 		}
-
-		return $virtual;
 	}
 
 	/**
-	 * Check if order contains only downloadable products.
+	 * Filter the order status set by payment_complete based on product types and stock.
+	 *
+	 * @param string   $status   Default status (processing or completed).
+	 * @param int      $order_id Order ID.
+	 * @param WC_Order $order    Order object.
+	 * @return string
+	 */
+	public function filter_payment_complete_order_status( $status, $order_id, $order ) {
+		// Get our custom status based on product type and stock.
+		$custom_status = $this->get_order_status_by_type( $order );
+
+		// Only override if we have a specific status to set.
+		if ( $custom_status && $custom_status !== $status ) {
+			return $custom_status;
+		}
+
+		return $status;
+	}
+
+	/**
+	 * Check if order has any backordered items.
 	 *
 	 * @param \WC_Order $order The order object.
 	 * @return bool
 	 */
-	protected function is_order_downloadable( $order ) {
-		$downloadable = true;
-
+	protected function has_backorder_items( $order ) {
 		foreach ( $order->get_items() as $item ) {
 			$product = $item->get_product();
-			if ( $product && ! $product->is_downloadable() ) {
-				$downloadable = false;
-				break;
+			if ( ! $product ) {
+				continue;
+			}
+
+			if ( $product->is_on_backorder() ||
+			( ! $product->is_in_stock() && $product->backorders_allowed() ) ) {
+				return true;
 			}
 		}
 
-		return $downloadable;
+		return false;
 	}
 
 	/**
