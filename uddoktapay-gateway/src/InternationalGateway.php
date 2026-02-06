@@ -72,6 +72,13 @@ class InternationalGateway extends \WC_Payment_Gateway {
 	protected $exchange_rate = 120.0;
 
 	/**
+	 * Pending payment redirect URL
+	 *
+	 * @var string
+	 */
+	protected $pending_payment_redirect_url = '';
+
+	/**
 	 * Constructor for the gateway.
 	 */
 	public function __construct() {
@@ -83,12 +90,13 @@ class InternationalGateway extends \WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Get settings with type coercion.
-		$this->title         = (string) $this->get_option( 'title', __( 'International Payment', 'uddoktapay-gateway' ) );
-		$this->description   = (string) $this->get_option( 'description', __( 'Pay securely via International payment methods.', 'uddoktapay-gateway' ) );
-		$this->api_key       = (string) $this->get_option( 'api_key', '' );
-		$this->api_url       = (string) $this->get_option( 'api_url', '' );
-		$this->exchange_rate = (float) $this->get_option( 'exchange_rate', '120' );
-		$this->debug         = 'yes' === $this->get_option( 'debug' );
+		$this->title                        = (string) $this->get_option( 'title', __( 'International Payment', 'uddoktapay-gateway' ) );
+		$this->description                  = (string) $this->get_option( 'description', __( 'Pay securely via International payment methods.', 'uddoktapay-gateway' ) );
+		$this->api_key                      = (string) $this->get_option( 'api_key', '' );
+		$this->api_url                      = (string) $this->get_option( 'api_url', '' );
+		$this->exchange_rate                = (float) $this->get_option( 'exchange_rate', '120' );
+		$this->pending_payment_redirect_url = (string) $this->get_option( 'pending_payment_redirect_url', '' );
+		$this->debug                        = 'yes' === $this->get_option( 'debug' );
 
 		// Actions.
 		add_action(
@@ -262,6 +270,13 @@ class InternationalGateway extends \WC_Payment_Gateway {
 			);
 		}
 
+		$base_fields['pending_payment_redirect_url'] = array(
+			'title'       => __( 'Pending Payment Redirect URL', 'uddoktapay-gateway' ),
+			'type'        => 'url',
+			'description' => __( 'URL to redirect customers to when the payment is pending.', 'uddoktapay-gateway' ),
+			'default'     => '',
+		);
+
 		// Translators: %s: Log file path.
 		$base_fields['debug'] = array(
 			'title'       => __( 'Debug Log', 'uddoktapay-gateway' ),
@@ -325,8 +340,7 @@ class InternationalGateway extends \WC_Payment_Gateway {
 			}
 
 			$metadata = array(
-				'order_id'     => $order->get_id(),
-				'redirect_url' => $this->get_return_url( $order ),
+				'order_id' => $order->get_id(),
 			);
 
 			$result = $this->get_api()->create_payment_international(
@@ -334,6 +348,7 @@ class InternationalGateway extends \WC_Payment_Gateway {
 				$order->get_currency(),
 				$order->get_billing_first_name(),
 				$order->get_billing_email(),
+				$order->get_billing_phone(),
 				$metadata,
 				$this->webhook_url,
 				$order->get_cancel_order_url_raw(),
@@ -421,8 +436,14 @@ class InternationalGateway extends \WC_Payment_Gateway {
 
 		$this->process_order_status( $order, $result );
 
-        // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
-		wp_redirect( $result->metadata->redirect_url );
+		if ( 'COMPLETED' !== $result->status && ! empty( $this->pending_payment_redirect_url ) ) {
+			// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+			wp_redirect( esc_url_raw( $this->pending_payment_redirect_url ) );
+			exit;
+		}
+
+		// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+		wp_redirect( esc_url_raw( $this->get_return_url( $order ) ) );
 		exit;
 	}
 

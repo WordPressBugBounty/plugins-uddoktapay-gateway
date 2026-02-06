@@ -2,8 +2,8 @@
 Contributors: uddoktapay
 Tags: uddoktapay, bdpaymentgateway, bkash, nagad, paypal
 Requires at least: 6.0
-Tested up to: 6.8.1
-Stable Tag: 2.6.0
+Tested up to: 6.9
+Stable Tag: 2.6.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -33,5 +33,6 @@ UddoktaPay WooCommerce Plugin. You can receive payment through your personal acc
 * Stripe
 * Paddle
 * Perfect Money
+* Cryptomus
 * Binance Personal (C2C)
 * etc

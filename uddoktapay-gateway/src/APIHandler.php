@@ -194,6 +194,7 @@ class APIHandler {
 	 * @param string $currency Currency code.
 	 * @param string $full_name Customer name.
 	 * @param string $email Customer email.
+	 * @param string $phone Customer phone.
 	 * @param array  $metadata Additional metadata.
 	 * @param string $redirect Redirect URL.
 	 * @param string $cancel Cancel URL.
@@ -202,7 +203,7 @@ class APIHandler {
 	 * @return object Response object.
 	 * @throws \Exception If currency is not provided or other errors occur.
 	 */
-	public static function create_payment( $amount = null, $currency = null, $full_name = null, $email = null, $metadata = null, $redirect = null, $cancel = null, $webhook_url = null, $exchange_rate = 120 ) {
+	public static function create_payment( $amount = null, $currency = null, $full_name = null, $email = null, $phone = null, $metadata = null, $redirect = null, $cancel = null, $webhook_url = null, $exchange_rate = 120 ) {
 		try {
 			if ( empty( $currency ) ) {
 				throw new \Exception( 'Currency is required' );
@@ -213,6 +214,7 @@ class APIHandler {
 				$currency,
 				$full_name,
 				$email,
+				$phone,
 				$metadata,
 				$redirect,
 				$cancel,
@@ -240,6 +242,7 @@ class APIHandler {
 	 * @param string $currency Currency code.
 	 * @param string $full_name Customer name.
 	 * @param string $email Customer email.
+	 * @param string $phone Customer phone.
 	 * @param array  $metadata Additional metadata.
 	 * @param string $redirect Redirect URL.
 	 * @param string $cancel Cancel URL.
@@ -248,7 +251,7 @@ class APIHandler {
 	 * @return object Response object.
 	 * @throws \Exception If currency is not provided or other errors occur.
 	 */
-	public static function create_payment_international( $amount = null, $currency = null, $full_name = null, $email = null, $metadata = null, $redirect = null, $cancel = null, $webhook_url = null, $exchange_rate = 120 ) {
+	public static function create_payment_international( $amount = null, $currency = null, $full_name = null, $email = null, $phone = null, $metadata = null, $redirect = null, $cancel = null, $webhook_url = null, $exchange_rate = 120 ) {
 		try {
 			if ( empty( $currency ) ) {
 				throw new \Exception( 'Currency is required' );
@@ -259,6 +262,7 @@ class APIHandler {
 				$currency,
 				$full_name,
 				$email,
+				$phone,
 				$metadata,
 				$redirect,
 				$cancel,
@@ -286,6 +290,7 @@ class APIHandler {
 	 * @param string $currency Currency code.
 	 * @param string $full_name Customer name.
 	 * @param string $email Customer email.
+	 * @param string $phone Customer phone.
 	 * @param array  $metadata Additional metadata.
 	 * @param string $redirect Redirect URL.
 	 * @param string $cancel Cancel URL.
@@ -294,7 +299,7 @@ class APIHandler {
 	 * @param string $base_currency Base currency for conversion.
 	 * @return array Payment arguments.
 	 */
-	private static function prepare_payment_args( $amount, $currency, $full_name, $email, $metadata, $redirect, $cancel, $webhook_url, $exchange_rate, $base_currency ) {
+	private static function prepare_payment_args( $amount, $currency, $full_name, $email, $phone, $metadata, $redirect, $cancel, $webhook_url, $exchange_rate, $base_currency ) {
 		$args = array();
 
 		// Process amount with currency conversion if needed.
@@ -308,6 +313,7 @@ class APIHandler {
 		// Set customer information.
 		$args['full_name'] = ! empty( $full_name ) ? sanitize_text_field( $full_name ) : 'Unknown';
 		$args['email']     = ! empty( $email ) ? sanitize_email( $email ) : 'unknown@gmail.com';
+		$args['phone']     = ! empty( $phone ) ? sanitize_text_field( $phone ) : '01300000000';
 
 		// Add optional parameters.
 		if ( ! is_null( $metadata ) ) {

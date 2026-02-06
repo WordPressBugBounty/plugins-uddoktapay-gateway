@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: UddoktaPay 2.6.0\n"
+"Project-Id-Version: UddoktaPay 2.6.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/uddoktapay-gateway\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-08T06:12:55+00:00\n"
+"POT-Creation-Date: 2025-12-31T08:23:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: uddoktapay-gateway\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: uddoktapay-gateway.php
-#: src/LocalGateway.php:124
+#: src/LocalGateway.php:132
 msgid "UddoktaPay"
 msgstr ""
 
@@ -33,8 +33,8 @@ msgid "Accept payments via bKash, Rocket, Nagad, Upay and International methods 
 msgstr ""
 
 #: src/Blocks/InternationalBlocks.php:52
-#: src/InternationalGateway.php:86
-#: src/InternationalGateway.php:180
+#: src/InternationalGateway.php:93
+#: src/InternationalGateway.php:188
 msgid "International Payment"
 msgstr ""
 
@@ -43,7 +43,7 @@ msgid "Pay with PayPal, Stripe, Paddle, Perfect Money"
 msgstr ""
 
 #: src/Blocks/LocalBlocks.php:52
-#: src/LocalGateway.php:86
+#: src/LocalGateway.php:93
 msgid "Mobile Banking"
 msgstr ""
 
@@ -51,308 +51,319 @@ msgstr ""
 msgid "Pay with bKash, Rocket, Nagad, Upay"
 msgstr ""
 
-#: src/InternationalGateway.php:87
+#: src/InternationalGateway.php:94
 msgid "Pay securely via International payment methods."
 msgstr ""
 
-#: src/InternationalGateway.php:124
+#: src/InternationalGateway.php:132
 msgid "UddoktaPay International"
 msgstr ""
 
-#: src/InternationalGateway.php:130
+#: src/InternationalGateway.php:138
 msgid "Accept international payments via multiple gateways including PayPal, Stripe, and more."
 msgstr ""
 
-#: src/InternationalGateway.php:132
-#: src/LocalGateway.php:132
+#: src/InternationalGateway.php:140
+#: src/LocalGateway.php:140
 msgid "Sign up for UddoktaPay account"
 msgstr ""
 
-#: src/InternationalGateway.php:147
-#: src/LocalGateway.php:147
+#: src/InternationalGateway.php:155
+#: src/LocalGateway.php:155
 msgid "UddoktaPay requires API Key and API URL to be configured."
-msgstr ""
-
-#: src/InternationalGateway.php:165
-#: src/LocalGateway.php:165
-msgid "Enable/Disable"
-msgstr ""
-
-#: src/InternationalGateway.php:167
-msgid "Enable UddoktaPay International Payment"
-msgstr ""
-
-#: src/InternationalGateway.php:171
-#: src/LocalGateway.php:171
-msgid "Show Icon"
 msgstr ""
 
 #: src/InternationalGateway.php:173
 #: src/LocalGateway.php:173
-msgid "Display icons on checkout page."
+msgid "Enable/Disable"
 msgstr ""
 
-#: src/InternationalGateway.php:177
-#: src/LocalGateway.php:177
-msgid "Title"
+#: src/InternationalGateway.php:175
+msgid "Enable UddoktaPay International Payment"
 msgstr ""
 
 #: src/InternationalGateway.php:179
 #: src/LocalGateway.php:179
-msgid "This controls the title which the user sees during checkout."
+msgid "Show Icon"
 msgstr ""
 
-#: src/InternationalGateway.php:184
-#: src/LocalGateway.php:184
-msgid "Description"
+#: src/InternationalGateway.php:181
+#: src/LocalGateway.php:181
+msgid "Display icons on checkout page."
 msgstr ""
 
-#: src/InternationalGateway.php:186
-#: src/LocalGateway.php:186
-msgid "This controls the description which the user sees during checkout."
+#: src/InternationalGateway.php:185
+#: src/LocalGateway.php:185
+msgid "Title"
 msgstr ""
 
 #: src/InternationalGateway.php:187
+#: src/LocalGateway.php:187
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: src/InternationalGateway.php:192
+#: src/LocalGateway.php:192
+msgid "Description"
+msgstr ""
+
+#: src/InternationalGateway.php:194
+#: src/LocalGateway.php:194
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: src/InternationalGateway.php:195
 msgid "Pay securely via PayPal, Stripe, Paddle, Perfect Money."
 msgstr ""
 
-#: src/InternationalGateway.php:191
-#: src/LocalGateway.php:191
+#: src/InternationalGateway.php:199
+#: src/LocalGateway.php:199
 msgid "API Key"
-msgstr ""
-
-#: src/InternationalGateway.php:193
-#: src/LocalGateway.php:193
-msgid "Get your API key from UddoktaPay Panel → Brand Settings."
-msgstr ""
-
-#: src/InternationalGateway.php:196
-#: src/LocalGateway.php:196
-msgid "API URL"
-msgstr ""
-
-#: src/InternationalGateway.php:198
-#: src/LocalGateway.php:198
-msgid "Get your API URL from UddoktaPay Panel → Brand Settings."
 msgstr ""
 
 #: src/InternationalGateway.php:201
 #: src/LocalGateway.php:201
-msgid "Physical Product Status"
+msgid "Get your API key from UddoktaPay Panel → Brand Settings."
 msgstr ""
 
-#: src/InternationalGateway.php:203
-#: src/LocalGateway.php:203
-msgid "Select status for physical product orders after successful payment."
+#: src/InternationalGateway.php:204
+#: src/LocalGateway.php:204
+msgid "API URL"
 msgstr ""
 
 #: src/InternationalGateway.php:206
-#: src/InternationalGateway.php:217
-#: src/InternationalGateway.php:228
-#: src/InternationalGateway.php:239
 #: src/LocalGateway.php:206
-#: src/LocalGateway.php:217
-#: src/LocalGateway.php:228
-#: src/LocalGateway.php:239
-msgid "On Hold"
+msgid "Get your API URL from UddoktaPay Panel → Brand Settings."
 msgstr ""
 
-#: src/InternationalGateway.php:207
-#: src/InternationalGateway.php:218
-#: src/InternationalGateway.php:229
-#: src/InternationalGateway.php:240
-#: src/LocalGateway.php:207
-#: src/LocalGateway.php:218
-#: src/LocalGateway.php:229
-#: src/LocalGateway.php:240
-msgid "Processing"
+#: src/InternationalGateway.php:209
+#: src/LocalGateway.php:209
+msgid "Physical Product Status"
 msgstr ""
 
-#: src/InternationalGateway.php:208
-#: src/InternationalGateway.php:219
-#: src/InternationalGateway.php:230
-#: src/InternationalGateway.php:241
-#: src/LocalGateway.php:208
-#: src/LocalGateway.php:219
-#: src/LocalGateway.php:230
-#: src/LocalGateway.php:241
-msgid "Completed"
-msgstr ""
-
-#: src/InternationalGateway.php:212
-#: src/LocalGateway.php:212
-msgid "Virtual Product Status"
+#: src/InternationalGateway.php:211
+#: src/LocalGateway.php:211
+msgid "Select status for physical product orders after successful payment."
 msgstr ""
 
 #: src/InternationalGateway.php:214
+#: src/InternationalGateway.php:225
+#: src/InternationalGateway.php:236
+#: src/InternationalGateway.php:247
 #: src/LocalGateway.php:214
+#: src/LocalGateway.php:225
+#: src/LocalGateway.php:236
+#: src/LocalGateway.php:247
+msgid "On Hold"
+msgstr ""
+
+#: src/InternationalGateway.php:215
+#: src/InternationalGateway.php:226
+#: src/InternationalGateway.php:237
+#: src/InternationalGateway.php:248
+#: src/LocalGateway.php:215
+#: src/LocalGateway.php:226
+#: src/LocalGateway.php:237
+#: src/LocalGateway.php:248
+msgid "Processing"
+msgstr ""
+
+#: src/InternationalGateway.php:216
+#: src/InternationalGateway.php:227
+#: src/InternationalGateway.php:238
+#: src/InternationalGateway.php:249
+#: src/LocalGateway.php:216
+#: src/LocalGateway.php:227
+#: src/LocalGateway.php:238
+#: src/LocalGateway.php:249
+msgid "Completed"
+msgstr ""
+
+#: src/InternationalGateway.php:220
+#: src/LocalGateway.php:220
+msgid "Virtual Product Status"
+msgstr ""
+
+#: src/InternationalGateway.php:222
+#: src/LocalGateway.php:222
 msgid "Select status for virtual product orders after successful payment."
 msgstr ""
 
-#: src/InternationalGateway.php:223
-#: src/LocalGateway.php:223
+#: src/InternationalGateway.php:231
+#: src/LocalGateway.php:231
 msgid "Downloadable Product Status"
 msgstr ""
 
-#: src/InternationalGateway.php:225
-#: src/LocalGateway.php:225
+#: src/InternationalGateway.php:233
+#: src/LocalGateway.php:233
 msgid "Select status for downloadable product orders after successful payment."
 msgstr ""
 
-#: src/InternationalGateway.php:234
-#: src/LocalGateway.php:234
+#: src/InternationalGateway.php:242
+#: src/LocalGateway.php:242
 msgid "Backorder Product Status"
 msgstr ""
 
-#: src/InternationalGateway.php:236
-#: src/LocalGateway.php:236
+#: src/InternationalGateway.php:244
+#: src/LocalGateway.php:244
 msgid "Select status for backorder product orders after successful payment."
 msgstr ""
 
 #. translators: %s: Currency code
-#: src/InternationalGateway.php:251
+#: src/InternationalGateway.php:259
 #, php-format
 msgid "%s to USD Exchange Rate"
 msgstr ""
 
-#: src/InternationalGateway.php:256
+#: src/InternationalGateway.php:264
 msgid "This rate will be applied to convert the total amount to USD."
 msgstr ""
 
-#: src/InternationalGateway.php:267
-#: src/LocalGateway.php:267
+#: src/InternationalGateway.php:274
+#: src/LocalGateway.php:274
+msgid "Pending Payment Redirect URL"
+msgstr ""
+
+#: src/InternationalGateway.php:276
+#: src/LocalGateway.php:276
+msgid "URL to redirect customers to when the payment is pending."
+msgstr ""
+
+#. Translators: %s: Log file path.
+#: src/InternationalGateway.php:282
+#: src/LocalGateway.php:282
 msgid "Debug Log"
 msgstr ""
 
-#: src/InternationalGateway.php:269
-#: src/LocalGateway.php:269
+#: src/InternationalGateway.php:284
+#: src/LocalGateway.php:284
 msgid "Enable logging"
 msgstr ""
 
 #. translators: %s: Log file path
-#: src/InternationalGateway.php:273
-#: src/LocalGateway.php:273
+#: src/InternationalGateway.php:288
+#: src/LocalGateway.php:288
 #, php-format
 msgid "Log gateway events inside %s"
 msgstr ""
 
-#: src/InternationalGateway.php:324
-#: src/LocalGateway.php:324
+#: src/InternationalGateway.php:339
+#: src/LocalGateway.php:339
 msgid "Invalid order"
 msgstr ""
 
-#: src/InternationalGateway.php:345
-#: src/LocalGateway.php:345
+#: src/InternationalGateway.php:360
+#: src/LocalGateway.php:360
 msgid "Payment URL not received"
 msgstr ""
 
-#: src/InternationalGateway.php:351
-#: src/LocalGateway.php:351
+#: src/InternationalGateway.php:366
+#: src/LocalGateway.php:366
 msgid "Awaiting UddoktaPay payment"
 msgstr ""
 
 #. translators: %s: Error message
-#: src/InternationalGateway.php:366
-#: src/LocalGateway.php:366
+#: src/InternationalGateway.php:381
+#: src/LocalGateway.php:381
 #, php-format
 msgid "An error occurred: %s"
 msgstr ""
 
 #. translators: %s: Error message
-#: src/InternationalGateway.php:394
-#: src/LocalGateway.php:394
+#: src/InternationalGateway.php:409
+#: src/LocalGateway.php:409
 #, php-format
 msgid "Error processing webhook: %s"
 msgstr ""
 
-#: src/InternationalGateway.php:414
-#: src/LocalGateway.php:414
+#: src/InternationalGateway.php:429
+#: src/LocalGateway.php:429
 msgid "Invalid order data received"
 msgstr ""
 
-#: src/InternationalGateway.php:419
-#: src/InternationalGateway.php:454
-#: src/LocalGateway.php:419
-#: src/LocalGateway.php:454
+#: src/InternationalGateway.php:434
+#: src/InternationalGateway.php:475
+#: src/LocalGateway.php:434
+#: src/LocalGateway.php:475
 msgid "Order not found"
 msgstr ""
 
-#: src/InternationalGateway.php:439
-#: src/LocalGateway.php:439
+#: src/InternationalGateway.php:460
+#: src/LocalGateway.php:460
 msgid "Empty webhook payload"
 msgstr ""
 
-#: src/InternationalGateway.php:443
-#: src/LocalGateway.php:443
+#: src/InternationalGateway.php:464
+#: src/LocalGateway.php:464
 msgid "Invalid webhook signature"
 msgstr ""
 
-#: src/InternationalGateway.php:449
-#: src/LocalGateway.php:449
+#: src/InternationalGateway.php:470
+#: src/LocalGateway.php:470
 msgid "Order ID not found in webhook data"
 msgstr ""
 
-#: src/InternationalGateway.php:490
-#: src/LocalGateway.php:490
+#: src/InternationalGateway.php:511
+#: src/LocalGateway.php:511
 msgid "Payment is on hold. Please check manually."
 msgstr ""
 
 #. translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID
-#: src/InternationalGateway.php:600
-#: src/LocalGateway.php:600
+#: src/InternationalGateway.php:621
+#: src/LocalGateway.php:621
 #, php-format
 msgid "Payment via %1$s. Amount: %2$s, Transaction ID: %3$s"
 msgstr ""
 
-#: src/InternationalGateway.php:620
-#: src/LocalGateway.php:620
+#: src/InternationalGateway.php:641
+#: src/LocalGateway.php:641
 msgid "Order contains backordered items. Items will be shipped when stock becomes available."
 msgstr ""
 
-#: src/InternationalGateway.php:704
-#: src/LocalGateway.php:711
+#: src/InternationalGateway.php:725
+#: src/LocalGateway.php:732
 msgid "Payment Method"
 msgstr ""
 
-#: src/InternationalGateway.php:710
-#: src/LocalGateway.php:717
+#: src/InternationalGateway.php:731
+#: src/LocalGateway.php:738
 msgid "Sender Number"
 msgstr ""
 
-#: src/InternationalGateway.php:716
-#: src/LocalGateway.php:723
+#: src/InternationalGateway.php:737
+#: src/LocalGateway.php:744
 msgid "Transaction ID"
 msgstr ""
 
-#: src/InternationalGateway.php:722
-#: src/LocalGateway.php:729
+#: src/InternationalGateway.php:743
+#: src/LocalGateway.php:750
 msgid "Amount"
 msgstr ""
 
-#: src/LocalGateway.php:87
-#: src/LocalGateway.php:187
+#: src/LocalGateway.php:94
+#: src/LocalGateway.php:195
 msgid "Pay securely via Bangladeshi payment methods."
 msgstr ""
 
-#: src/LocalGateway.php:130
+#: src/LocalGateway.php:138
 msgid "Accept Bangladeshi payments via multiple gateways including bKash, Nagad, Rocket and more."
 msgstr ""
 
-#: src/LocalGateway.php:167
+#: src/LocalGateway.php:175
 msgid "Enable UddoktaPay"
 msgstr ""
 
-#: src/LocalGateway.php:180
+#: src/LocalGateway.php:188
 msgid "Bangladeshi Payment"
 msgstr ""
 
 #. translators: %s: Currency code
-#: src/LocalGateway.php:251
+#: src/LocalGateway.php:259
 #, php-format
 msgid "%s to BDT Exchange Rate"
 msgstr ""
 
-#: src/LocalGateway.php:256
+#: src/LocalGateway.php:264
 msgid "This rate will be applied to convert the total amount to BDT."
 msgstr ""
 
