@@ -1,15 +1,15 @@
-# Copyright (C) 2025 UddoktaPay
+# Copyright (C) 2026 UddoktaPay
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: UddoktaPay 2.6.3\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/uddoktapay-gateway\n"
+"Project-Id-Version: UddoktaPay 2.6.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-31T08:23:04+00:00\n"
+"POT-Creation-Date: 2026-06-29T13:02:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: uddoktapay-gateway\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: uddoktapay-gateway.php
-#: src/LocalGateway.php:132
+#: src/LocalGateway.php:37
 msgid "UddoktaPay"
 msgstr ""
 
@@ -32,9 +32,226 @@ msgstr ""
 msgid "Accept payments via bKash, Rocket, Nagad, Upay and International methods through UddoktaPay"
 msgstr ""
 
+#: src/AbstractGateway.php:171
+msgid "UddoktaPay requires API Key and API URL to be configured."
+msgstr ""
+
+#: src/AbstractGateway.php:190
+msgid "Enable/Disable"
+msgstr ""
+
+#: src/AbstractGateway.php:196
+msgid "Show Icon"
+msgstr ""
+
+#: src/AbstractGateway.php:198
+msgid "Display icons on checkout page."
+msgstr ""
+
+#: src/AbstractGateway.php:202
+msgid "Title"
+msgstr ""
+
+#: src/AbstractGateway.php:204
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: src/AbstractGateway.php:209
+msgid "Description"
+msgstr ""
+
+#: src/AbstractGateway.php:211
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: src/AbstractGateway.php:216
+msgid "API Key"
+msgstr ""
+
+#: src/AbstractGateway.php:218
+msgid "Get your API key from UddoktaPay Panel → Brand Settings."
+msgstr ""
+
+#: src/AbstractGateway.php:221
+msgid "API URL"
+msgstr ""
+
+#: src/AbstractGateway.php:223
+msgid "Get your API URL from UddoktaPay Panel → Brand Settings."
+msgstr ""
+
+#: src/AbstractGateway.php:226
+msgid "Physical Product Status"
+msgstr ""
+
+#: src/AbstractGateway.php:228
+msgid "Select status for physical product orders after successful payment."
+msgstr ""
+
+#: src/AbstractGateway.php:231
+#: src/AbstractGateway.php:242
+#: src/AbstractGateway.php:253
+#: src/AbstractGateway.php:264
+msgid "On Hold"
+msgstr ""
+
+#: src/AbstractGateway.php:232
+#: src/AbstractGateway.php:243
+#: src/AbstractGateway.php:254
+#: src/AbstractGateway.php:265
+msgid "Processing"
+msgstr ""
+
+#: src/AbstractGateway.php:233
+#: src/AbstractGateway.php:244
+#: src/AbstractGateway.php:255
+#: src/AbstractGateway.php:266
+msgid "Completed"
+msgstr ""
+
+#: src/AbstractGateway.php:237
+msgid "Virtual Product Status"
+msgstr ""
+
+#: src/AbstractGateway.php:239
+msgid "Select status for virtual product orders after successful payment."
+msgstr ""
+
+#: src/AbstractGateway.php:248
+msgid "Downloadable Product Status"
+msgstr ""
+
+#: src/AbstractGateway.php:250
+msgid "Select status for downloadable product orders after successful payment."
+msgstr ""
+
+#: src/AbstractGateway.php:259
+msgid "Backorder Product Status"
+msgstr ""
+
+#: src/AbstractGateway.php:261
+msgid "Select status for backorder product orders after successful payment."
+msgstr ""
+
+#. translators: %1$s: Order currency code, %2$s: Gateway base currency code
+#: src/AbstractGateway.php:275
+#, php-format
+msgid "%1$s to %2$s Exchange Rate"
+msgstr ""
+
+#. translators: %s: Gateway base currency code
+#: src/AbstractGateway.php:283
+#, php-format
+msgid "This rate will be applied to convert the total amount to %s."
+msgstr ""
+
+#: src/AbstractGateway.php:295
+msgid "Pending Payment Redirect URL"
+msgstr ""
+
+#: src/AbstractGateway.php:297
+msgid "URL to redirect customers to when the payment is pending."
+msgstr ""
+
+#: src/AbstractGateway.php:302
+msgid "Debug Log"
+msgstr ""
+
+#: src/AbstractGateway.php:304
+msgid "Enable logging"
+msgstr ""
+
+#. translators: %s: Log file path
+#: src/AbstractGateway.php:308
+#, php-format
+msgid "Log gateway events inside %s"
+msgstr ""
+
+#: src/AbstractGateway.php:359
+msgid "Invalid order"
+msgstr ""
+
+#: src/AbstractGateway.php:368
+msgid "Payment URL not received"
+msgstr ""
+
+#: src/AbstractGateway.php:378
+msgid "Awaiting UddoktaPay payment"
+msgstr ""
+
+#. translators: %s: Error message
+#: src/AbstractGateway.php:391
+#, php-format
+msgid "An error occurred: %s"
+msgstr ""
+
+#. translators: %s: Error message
+#: src/AbstractGateway.php:419
+#, php-format
+msgid "Error processing webhook: %s"
+msgstr ""
+
+#: src/AbstractGateway.php:439
+msgid "Invalid order data received"
+msgstr ""
+
+#: src/AbstractGateway.php:444
+#: src/AbstractGateway.php:491
+msgid "Order not found"
+msgstr ""
+
+#: src/AbstractGateway.php:470
+msgid "Empty webhook payload"
+msgstr ""
+
+#: src/AbstractGateway.php:474
+msgid "Invalid webhook signature"
+msgstr ""
+
+#: src/AbstractGateway.php:480
+msgid "Invoice ID not found in webhook data"
+msgstr ""
+
+#: src/AbstractGateway.php:486
+msgid "Order ID not found in webhook data"
+msgstr ""
+
+#: src/AbstractGateway.php:533
+msgid "Payment amount does not match the order total. Please verify manually."
+msgstr ""
+
+#: src/AbstractGateway.php:544
+msgid "Payment is on hold. Please check manually."
+msgstr ""
+
+#. translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID
+#: src/AbstractGateway.php:655
+#, php-format
+msgid "Payment via %1$s. Amount: %2$s, Transaction ID: %3$s"
+msgstr ""
+
+#: src/AbstractGateway.php:670
+msgid "Order contains backordered items. Items will be shipped when stock becomes available."
+msgstr ""
+
+#: src/AbstractGateway.php:751
+msgid "Payment Method"
+msgstr ""
+
+#: src/AbstractGateway.php:757
+msgid "Sender Number"
+msgstr ""
+
+#: src/AbstractGateway.php:763
+msgid "Transaction ID"
+msgstr ""
+
+#: src/AbstractGateway.php:769
+msgid "Amount"
+msgstr ""
+
 #: src/Blocks/InternationalBlocks.php:52
-#: src/InternationalGateway.php:93
-#: src/InternationalGateway.php:188
+#: src/InternationalGateway.php:76
 msgid "International Payment"
 msgstr ""
 
@@ -43,7 +260,6 @@ msgid "Pay with PayPal, Stripe, Paddle, Perfect Money"
 msgstr ""
 
 #: src/Blocks/LocalBlocks.php:52
-#: src/LocalGateway.php:93
 msgid "Mobile Banking"
 msgstr ""
 
@@ -51,320 +267,41 @@ msgstr ""
 msgid "Pay with bKash, Rocket, Nagad, Upay"
 msgstr ""
 
-#: src/InternationalGateway.php:94
-msgid "Pay securely via International payment methods."
-msgstr ""
-
-#: src/InternationalGateway.php:132
+#: src/InternationalGateway.php:37
 msgid "UddoktaPay International"
 msgstr ""
 
-#: src/InternationalGateway.php:138
+#: src/InternationalGateway.php:42
 msgid "Accept international payments via multiple gateways including PayPal, Stripe, and more."
 msgstr ""
 
-#: src/InternationalGateway.php:140
-#: src/LocalGateway.php:140
+#: src/InternationalGateway.php:44
+#: src/LocalGateway.php:44
 msgid "Sign up for UddoktaPay account"
 msgstr ""
 
-#: src/InternationalGateway.php:155
-#: src/LocalGateway.php:155
-msgid "UddoktaPay requires API Key and API URL to be configured."
+#: src/InternationalGateway.php:85
+msgid "Pay securely via International payment methods."
 msgstr ""
 
-#: src/InternationalGateway.php:173
-#: src/LocalGateway.php:173
-msgid "Enable/Disable"
-msgstr ""
-
-#: src/InternationalGateway.php:175
+#: src/InternationalGateway.php:94
 msgid "Enable UddoktaPay International Payment"
 msgstr ""
 
-#: src/InternationalGateway.php:179
-#: src/LocalGateway.php:179
-msgid "Show Icon"
-msgstr ""
-
-#: src/InternationalGateway.php:181
-#: src/LocalGateway.php:181
-msgid "Display icons on checkout page."
-msgstr ""
-
-#: src/InternationalGateway.php:185
-#: src/LocalGateway.php:185
-msgid "Title"
-msgstr ""
-
-#: src/InternationalGateway.php:187
-#: src/LocalGateway.php:187
-msgid "This controls the title which the user sees during checkout."
-msgstr ""
-
-#: src/InternationalGateway.php:192
-#: src/LocalGateway.php:192
-msgid "Description"
-msgstr ""
-
-#: src/InternationalGateway.php:194
-#: src/LocalGateway.php:194
-msgid "This controls the description which the user sees during checkout."
-msgstr ""
-
-#: src/InternationalGateway.php:195
-msgid "Pay securely via PayPal, Stripe, Paddle, Perfect Money."
-msgstr ""
-
-#: src/InternationalGateway.php:199
-#: src/LocalGateway.php:199
-msgid "API Key"
-msgstr ""
-
-#: src/InternationalGateway.php:201
-#: src/LocalGateway.php:201
-msgid "Get your API key from UddoktaPay Panel → Brand Settings."
-msgstr ""
-
-#: src/InternationalGateway.php:204
-#: src/LocalGateway.php:204
-msgid "API URL"
-msgstr ""
-
-#: src/InternationalGateway.php:206
-#: src/LocalGateway.php:206
-msgid "Get your API URL from UddoktaPay Panel → Brand Settings."
-msgstr ""
-
-#: src/InternationalGateway.php:209
-#: src/LocalGateway.php:209
-msgid "Physical Product Status"
-msgstr ""
-
-#: src/InternationalGateway.php:211
-#: src/LocalGateway.php:211
-msgid "Select status for physical product orders after successful payment."
-msgstr ""
-
-#: src/InternationalGateway.php:214
-#: src/InternationalGateway.php:225
-#: src/InternationalGateway.php:236
-#: src/InternationalGateway.php:247
-#: src/LocalGateway.php:214
-#: src/LocalGateway.php:225
-#: src/LocalGateway.php:236
-#: src/LocalGateway.php:247
-msgid "On Hold"
-msgstr ""
-
-#: src/InternationalGateway.php:215
-#: src/InternationalGateway.php:226
-#: src/InternationalGateway.php:237
-#: src/InternationalGateway.php:248
-#: src/LocalGateway.php:215
-#: src/LocalGateway.php:226
-#: src/LocalGateway.php:237
-#: src/LocalGateway.php:248
-msgid "Processing"
-msgstr ""
-
-#: src/InternationalGateway.php:216
-#: src/InternationalGateway.php:227
-#: src/InternationalGateway.php:238
-#: src/InternationalGateway.php:249
-#: src/LocalGateway.php:216
-#: src/LocalGateway.php:227
-#: src/LocalGateway.php:238
-#: src/LocalGateway.php:249
-msgid "Completed"
-msgstr ""
-
-#: src/InternationalGateway.php:220
-#: src/LocalGateway.php:220
-msgid "Virtual Product Status"
-msgstr ""
-
-#: src/InternationalGateway.php:222
-#: src/LocalGateway.php:222
-msgid "Select status for virtual product orders after successful payment."
-msgstr ""
-
-#: src/InternationalGateway.php:231
-#: src/LocalGateway.php:231
-msgid "Downloadable Product Status"
-msgstr ""
-
-#: src/InternationalGateway.php:233
-#: src/LocalGateway.php:233
-msgid "Select status for downloadable product orders after successful payment."
-msgstr ""
-
-#: src/InternationalGateway.php:242
-#: src/LocalGateway.php:242
-msgid "Backorder Product Status"
-msgstr ""
-
-#: src/InternationalGateway.php:244
-#: src/LocalGateway.php:244
-msgid "Select status for backorder product orders after successful payment."
-msgstr ""
-
-#. translators: %s: Currency code
-#: src/InternationalGateway.php:259
-#, php-format
-msgid "%s to USD Exchange Rate"
-msgstr ""
-
-#: src/InternationalGateway.php:264
-msgid "This rate will be applied to convert the total amount to USD."
-msgstr ""
-
-#: src/InternationalGateway.php:274
-#: src/LocalGateway.php:274
-msgid "Pending Payment Redirect URL"
-msgstr ""
-
-#: src/InternationalGateway.php:276
-#: src/LocalGateway.php:276
-msgid "URL to redirect customers to when the payment is pending."
-msgstr ""
-
-#. Translators: %s: Log file path.
-#: src/InternationalGateway.php:282
-#: src/LocalGateway.php:282
-msgid "Debug Log"
-msgstr ""
-
-#: src/InternationalGateway.php:284
-#: src/LocalGateway.php:284
-msgid "Enable logging"
-msgstr ""
-
-#. translators: %s: Log file path
-#: src/InternationalGateway.php:288
-#: src/LocalGateway.php:288
-#, php-format
-msgid "Log gateway events inside %s"
-msgstr ""
-
-#: src/InternationalGateway.php:339
-#: src/LocalGateway.php:339
-msgid "Invalid order"
-msgstr ""
-
-#: src/InternationalGateway.php:360
-#: src/LocalGateway.php:360
-msgid "Payment URL not received"
-msgstr ""
-
-#: src/InternationalGateway.php:366
-#: src/LocalGateway.php:366
-msgid "Awaiting UddoktaPay payment"
-msgstr ""
-
-#. translators: %s: Error message
-#: src/InternationalGateway.php:381
-#: src/LocalGateway.php:381
-#, php-format
-msgid "An error occurred: %s"
-msgstr ""
-
-#. translators: %s: Error message
-#: src/InternationalGateway.php:409
-#: src/LocalGateway.php:409
-#, php-format
-msgid "Error processing webhook: %s"
-msgstr ""
-
-#: src/InternationalGateway.php:429
-#: src/LocalGateway.php:429
-msgid "Invalid order data received"
-msgstr ""
-
-#: src/InternationalGateway.php:434
-#: src/InternationalGateway.php:475
-#: src/LocalGateway.php:434
-#: src/LocalGateway.php:475
-msgid "Order not found"
-msgstr ""
-
-#: src/InternationalGateway.php:460
-#: src/LocalGateway.php:460
-msgid "Empty webhook payload"
-msgstr ""
-
-#: src/InternationalGateway.php:464
-#: src/LocalGateway.php:464
-msgid "Invalid webhook signature"
-msgstr ""
-
-#: src/InternationalGateway.php:470
-#: src/LocalGateway.php:470
-msgid "Order ID not found in webhook data"
-msgstr ""
-
-#: src/InternationalGateway.php:511
-#: src/LocalGateway.php:511
-msgid "Payment is on hold. Please check manually."
-msgstr ""
-
-#. translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID
-#: src/InternationalGateway.php:621
-#: src/LocalGateway.php:621
-#, php-format
-msgid "Payment via %1$s. Amount: %2$s, Transaction ID: %3$s"
-msgstr ""
-
-#: src/InternationalGateway.php:641
-#: src/LocalGateway.php:641
-msgid "Order contains backordered items. Items will be shipped when stock becomes available."
-msgstr ""
-
-#: src/InternationalGateway.php:725
-#: src/LocalGateway.php:732
-msgid "Payment Method"
-msgstr ""
-
-#: src/InternationalGateway.php:731
-#: src/LocalGateway.php:738
-msgid "Sender Number"
-msgstr ""
-
-#: src/InternationalGateway.php:737
-#: src/LocalGateway.php:744
-msgid "Transaction ID"
-msgstr ""
-
-#: src/InternationalGateway.php:743
-#: src/LocalGateway.php:750
-msgid "Amount"
-msgstr ""
-
-#: src/LocalGateway.php:94
-#: src/LocalGateway.php:195
-msgid "Pay securely via Bangladeshi payment methods."
-msgstr ""
-
-#: src/LocalGateway.php:138
+#: src/LocalGateway.php:42
 msgid "Accept Bangladeshi payments via multiple gateways including bKash, Nagad, Rocket and more."
 msgstr ""
 
-#: src/LocalGateway.php:175
-msgid "Enable UddoktaPay"
-msgstr ""
-
-#: src/LocalGateway.php:188
+#: src/LocalGateway.php:76
 msgid "Bangladeshi Payment"
 msgstr ""
 
-#. translators: %s: Currency code
-#: src/LocalGateway.php:259
-#, php-format
-msgid "%s to BDT Exchange Rate"
+#: src/LocalGateway.php:85
+msgid "Pay securely via Bangladeshi payment methods."
 msgstr ""
 
-#: src/LocalGateway.php:264
-msgid "This rate will be applied to convert the total amount to BDT."
+#: src/LocalGateway.php:94
+msgid "Enable UddoktaPay"
 msgstr ""
 
 #. Translators: %1$s is the plugin name, %2$s is the required plugin name.

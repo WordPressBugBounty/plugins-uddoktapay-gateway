@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'UddoktaPay\\UddoktaPayGateway\\APIHandler' => $baseDir . '/src/APIHandler.php',
+    'UddoktaPay\\UddoktaPayGateway\\AbstractGateway' => $baseDir . '/src/AbstractGateway.php',
     'UddoktaPay\\UddoktaPayGateway\\Blocks\\InternationalBlocks' => $baseDir . '/src/Blocks/InternationalBlocks.php',
     'UddoktaPay\\UddoktaPayGateway\\Blocks\\LocalBlocks' => $baseDir . '/src/Blocks/LocalBlocks.php',
     'UddoktaPay\\UddoktaPayGateway\\Enums\\OrderStatus' => $baseDir . '/src/Enums/OrderStatus.php',

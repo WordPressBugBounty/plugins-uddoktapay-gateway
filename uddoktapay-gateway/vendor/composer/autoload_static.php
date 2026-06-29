@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1410a8b3cb225854a5abb0146dd1968b
+class ComposerStaticInitf0da7015dfe0fa9f839ceeea437e8dcc
 {
     public static $prefixLengthsPsr4 = array (
         'U' =>
@@ -23,6 +23,7 @@ class ComposerStaticInit1410a8b3cb225854a5abb0146dd1968b
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'UddoktaPay\\UddoktaPayGateway\\APIHandler' => __DIR__ . '/../..' . '/src/APIHandler.php',
+        'UddoktaPay\\UddoktaPayGateway\\AbstractGateway' => __DIR__ . '/../..' . '/src/AbstractGateway.php',
         'UddoktaPay\\UddoktaPayGateway\\Blocks\\InternationalBlocks' => __DIR__ . '/../..' . '/src/Blocks/InternationalBlocks.php',
         'UddoktaPay\\UddoktaPayGateway\\Blocks\\LocalBlocks' => __DIR__ . '/../..' . '/src/Blocks/LocalBlocks.php',
         'UddoktaPay\\UddoktaPayGateway\\Enums\\OrderStatus' => __DIR__ . '/../..' . '/src/Enums/OrderStatus.php',
@@ -33,9 +34,9 @@ class ComposerStaticInit1410a8b3cb225854a5abb0146dd1968b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1410a8b3cb225854a5abb0146dd1968b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1410a8b3cb225854a5abb0146dd1968b::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1410a8b3cb225854a5abb0146dd1968b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf0da7015dfe0fa9f839ceeea437e8dcc::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf0da7015dfe0fa9f839ceeea437e8dcc::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf0da7015dfe0fa9f839ceeea437e8dcc::$classMap;
 
         }, null, ClassLoader::class);
     }

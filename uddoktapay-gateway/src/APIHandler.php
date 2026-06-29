@@ -302,13 +302,7 @@ class APIHandler {
 	private static function prepare_payment_args( $amount, $currency, $full_name, $email, $phone, $metadata, $redirect, $cancel, $webhook_url, $exchange_rate, $base_currency ) {
 		$args = array();
 
-		// Process amount with currency conversion if needed.
-		$args['amount'] = ! empty( $amount ) ? $amount : 0;
-		if ( $currency !== $base_currency ) {
-			$args['amount'] = 'USD' === $base_currency ?
-			$amount / $exchange_rate :
-			$amount * $exchange_rate;
-		}
+		$args['amount'] = self::convert_amount( $amount, $currency, $exchange_rate, $base_currency );
 
 		// Set customer information.
 		$args['full_name'] = ! empty( $full_name ) ? sanitize_text_field( $full_name ) : 'Unknown';
@@ -335,6 +329,25 @@ class APIHandler {
 		$args['return_type'] = 'GET';
 
 		return $args;
+	}
+
+	/**
+	 * Convert an order amount into the gateway base currency.
+	 *
+	 * @param float  $amount Order amount.
+	 * @param string $currency Order currency code.
+	 * @param float  $exchange_rate Exchange rate.
+	 * @param string $base_currency Gateway base currency.
+	 * @return float
+	 */
+	public static function convert_amount( $amount, $currency, $exchange_rate, $base_currency ) {
+		$amount = ! empty( $amount ) ? (float) $amount : 0.0;
+
+		if ( $currency === $base_currency ) {
+			return $amount;
+		}
+
+		return 'USD' === $base_currency ? $amount / $exchange_rate : $amount * $exchange_rate;
 	}
 
 	/**
