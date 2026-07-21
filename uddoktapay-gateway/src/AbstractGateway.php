@@ -5,7 +5,7 @@
  * Shared implementation for the local and international UddoktaPay gateways.
  *
  * @package UddoktaPayGateway
- * @since 2.6.4
+ * @since 2.7.0
  */
 
 declare (strict_types = 1);
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit( 'Direct access is not allowed.' );
 /**
  * Abstract Gateway Class
  *
- * @since 2.6.4
+ * @since 2.7.0
  */
 abstract class AbstractGateway extends \WC_Payment_Gateway {
 
@@ -51,13 +51,6 @@ abstract class AbstractGateway extends \WC_Payment_Gateway {
 	 * @var string
 	 */
 	protected $api_key = '';
-
-	/**
-	 * Webhook URL
-	 *
-	 * @var string
-	 */
-	protected $webhook_url;
 
 	/**
 	 * Exchange rate
@@ -346,6 +339,50 @@ abstract class AbstractGateway extends \WC_Payment_Gateway {
 	}
 
 	/**
+	 * Build a unguessable, per-order webhook/redirect URL.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @return string
+	 */
+	protected function build_order_webhook_url( $order ) {
+		$token = wp_generate_password( 32, false );
+
+		$order->update_meta_data( '_uddoktapay_webhook_token', $token );
+		$order->save();
+
+		return (string) add_query_arg(
+			array(
+				'wc-api'           => $this->id,
+				'uddoktapay_token' => $token,
+			),
+			home_url( '/' )
+		);
+	}
+
+	/**
+	 * Validate the per-order webhook token from the request against the order.
+	 *
+	 * @param \WC_Order $order The order object.
+	 * @return void
+	 * @throws \Exception If the token is missing or does not match.
+	 */
+	protected function validate_webhook_token( $order ) {
+		$stored = (string) $order->get_meta( '_uddoktapay_webhook_token' );
+
+		if ( empty( $stored ) ) {
+			return;
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$provided = isset( $_GET['uddoktapay_token'] ) ? sanitize_text_field( wp_unslash( $_GET['uddoktapay_token'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		if ( empty( $provided ) || ! hash_equals( $stored, $provided ) ) {
+			throw new \Exception( esc_html__( 'Invalid webhook token.', 'uddoktapay-gateway' ) );
+		}
+	}
+
+	/**
 	 * Process Payment.
 	 *
 	 * @param int $order_id Order ID.
@@ -444,6 +481,8 @@ abstract class AbstractGateway extends \WC_Payment_Gateway {
 			throw new \Exception( esc_html__( 'Order not found', 'uddoktapay-gateway' ) );
 		}
 
+		$this->validate_webhook_token( $order );
+
 		$this->process_order_status( $order, $result );
 
 		if ( 'COMPLETED' !== $result->status && ! empty( $this->pending_payment_redirect_url ) ) {
@@ -491,6 +530,8 @@ abstract class AbstractGateway extends \WC_Payment_Gateway {
 			throw new \Exception( esc_html__( 'Order not found', 'uddoktapay-gateway' ) );
 		}
 
+		$this->validate_webhook_token( $order );
+
 		$this->process_order_status( $order, $data );
 	}
 
@@ -519,10 +560,17 @@ abstract class AbstractGateway extends \WC_Payment_Gateway {
 	 * @param \WC_Order $order The order object.
 	 * @param object    $data  The payment data.
 	 * @return void
+	 * @throws \Exception If the verified payment status is not one we accept.
 	 */
 	protected function process_order_status( $order, $data ) {
 		if ( OrderStatus::COMPLETED === $order->get_status() ) {
 			return;
+		}
+
+		$status = $data->status ?? '';
+
+		if ( 'COMPLETED' !== $status && 'PENDING' !== $status ) {
+			throw new \Exception( esc_html__( 'Invalid payment status received. Order status was not changed.', 'uddoktapay-gateway' ) );
 		}
 
 		$order->update_meta_data( $this->get_payment_data_meta_key(), $data );
@@ -536,12 +584,12 @@ abstract class AbstractGateway extends \WC_Payment_Gateway {
 			return;
 		}
 
-		if ( 'COMPLETED' === ( $data->status ?? '' ) ) {
+		if ( 'COMPLETED' === $status ) {
 			$this->handle_completed_payment( $order, $data );
 		} else {
 			$order->update_status(
 				OrderStatus::ON_HOLD,
-				__( 'Payment is on hold. Please check manually.', 'uddoktapay-gateway' )
+				__( 'Payment is pending. Please check manually.', 'uddoktapay-gateway' )
 			);
 		}
 

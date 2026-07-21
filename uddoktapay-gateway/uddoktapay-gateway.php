@@ -3,13 +3,13 @@
  * Plugin Name:    UddoktaPay
  * Plugin URI:     https://uddoktapay.com
  * Description:    Accept payments via bKash, Rocket, Nagad, Upay and International methods through UddoktaPay
- * Version:        2.6.4
+ * Version:        2.7.0
  * Author:         UddoktaPay
  * Author URI:     https://uddoktapay.com
- * License:        GPL v2 or later
- * License URI:    https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:    uddoktapay-gateway
  * Domain Path:    /languages
+ * Requires at least: 6.0
+ * Requires PHP: 7.4
  *
  * @package UddoktaPay
  */
@@ -17,7 +17,7 @@
 defined( 'ABSPATH' ) || exit( 'Direct access is not allowed.' );
 
 // Define constants.
-define( 'UDDOKTAPAY_VERSION', '2.6.4' );
+define( 'UDDOKTAPAY_VERSION', '2.7.0' );
 define( 'UDDOKTAPAY_FILE', __FILE__ );
 define( 'UDDOKTAPAY_PATH', plugin_dir_path( UDDOKTAPAY_FILE ) );
 define( 'UDDOKTAPAY_URL', plugin_dir_url( UDDOKTAPAY_FILE ) );
@@ -147,6 +147,8 @@ final class UddoktaPay_Plugin {
 		}
 
 		add_filter( 'plugin_action_links_' . plugin_basename( UDDOKTAPAY_FILE ), array( $this, 'plugin_action_links' ) );
+
+		( new UddoktaPay\UddoktaPayGateway\Admin\OrderListColumn() )->register();
 	}
 
 	/**

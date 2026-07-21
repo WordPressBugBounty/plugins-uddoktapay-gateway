@@ -24,6 +24,7 @@ class ComposerStaticInitf0da7015dfe0fa9f839ceeea437e8dcc
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'UddoktaPay\\UddoktaPayGateway\\APIHandler' => __DIR__ . '/../..' . '/src/APIHandler.php',
         'UddoktaPay\\UddoktaPayGateway\\AbstractGateway' => __DIR__ . '/../..' . '/src/AbstractGateway.php',
+        'UddoktaPay\\UddoktaPayGateway\\Admin\\OrderListColumn' => __DIR__ . '/../..' . '/src/Admin/OrderListColumn.php',
         'UddoktaPay\\UddoktaPayGateway\\Blocks\\InternationalBlocks' => __DIR__ . '/../..' . '/src/Blocks/InternationalBlocks.php',
         'UddoktaPay\\UddoktaPayGateway\\Blocks\\LocalBlocks' => __DIR__ . '/../..' . '/src/Blocks/LocalBlocks.php',
         'UddoktaPay\\UddoktaPayGateway\\Enums\\OrderStatus' => __DIR__ . '/../..' . '/src/Enums/OrderStatus.php',

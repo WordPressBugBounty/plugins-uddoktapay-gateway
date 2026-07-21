@@ -43,8 +43,7 @@ class InternationalGateway extends AbstractGateway {
 			esc_url( 'https://uddoktapay.com' ),
 			__( 'Sign up for UddoktaPay account', 'uddoktapay-gateway' )
 		);
-		$this->webhook_url = (string) add_query_arg( 'wc-api', $this->id, home_url( '/' ) );
-		$this->supports    = array(
+		$this->supports = array(
 			'products',
 		);
 	}
@@ -102,6 +101,8 @@ class InternationalGateway extends AbstractGateway {
 	 * @return object
 	 */
 	protected function create_payment_for_order( $order, $metadata ) {
+		$webhook_url = $this->build_order_webhook_url( $order );
+
 		return $this->get_api()->create_payment_international(
 			$order->get_total(),
 			$order->get_currency(),
@@ -109,9 +110,9 @@ class InternationalGateway extends AbstractGateway {
 			$order->get_billing_email(),
 			$order->get_billing_phone(),
 			$metadata,
-			$this->webhook_url,
+			$webhook_url,
 			$order->get_cancel_order_url_raw(),
-			$this->webhook_url,
+			$webhook_url,
 			$this->exchange_rate
 		);
 	}

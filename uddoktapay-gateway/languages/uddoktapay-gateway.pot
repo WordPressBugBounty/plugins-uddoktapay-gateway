@@ -1,15 +1,15 @@
 # Copyright (C) 2026 UddoktaPay
-# This file is distributed under the GPL v2 or later.
+# This file is distributed under the same license as the UddoktaPay plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: UddoktaPay 2.6.4\n"
+"Project-Id-Version: UddoktaPay 2.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-29T13:02:45+00:00\n"
+"POT-Creation-Date: 2026-07-21T02:36:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: uddoktapay-gateway\n"
@@ -32,226 +32,242 @@ msgstr ""
 msgid "Accept payments via bKash, Rocket, Nagad, Upay and International methods through UddoktaPay"
 msgstr ""
 
-#: src/AbstractGateway.php:171
+#: src/AbstractGateway.php:164
 msgid "UddoktaPay requires API Key and API URL to be configured."
 msgstr ""
 
-#: src/AbstractGateway.php:190
+#: src/AbstractGateway.php:183
 msgid "Enable/Disable"
 msgstr ""
 
-#: src/AbstractGateway.php:196
+#: src/AbstractGateway.php:189
 msgid "Show Icon"
 msgstr ""
 
-#: src/AbstractGateway.php:198
+#: src/AbstractGateway.php:191
 msgid "Display icons on checkout page."
 msgstr ""
 
-#: src/AbstractGateway.php:202
+#: src/AbstractGateway.php:195
 msgid "Title"
 msgstr ""
 
-#: src/AbstractGateway.php:204
+#: src/AbstractGateway.php:197
 msgid "This controls the title which the user sees during checkout."
 msgstr ""
 
-#: src/AbstractGateway.php:209
+#: src/AbstractGateway.php:202
 msgid "Description"
 msgstr ""
 
-#: src/AbstractGateway.php:211
+#: src/AbstractGateway.php:204
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
-#: src/AbstractGateway.php:216
+#: src/AbstractGateway.php:209
 msgid "API Key"
 msgstr ""
 
-#: src/AbstractGateway.php:218
+#: src/AbstractGateway.php:211
 msgid "Get your API key from UddoktaPay Panel → Brand Settings."
 msgstr ""
 
-#: src/AbstractGateway.php:221
+#: src/AbstractGateway.php:214
 msgid "API URL"
 msgstr ""
 
-#: src/AbstractGateway.php:223
+#: src/AbstractGateway.php:216
 msgid "Get your API URL from UddoktaPay Panel → Brand Settings."
 msgstr ""
 
-#: src/AbstractGateway.php:226
+#: src/AbstractGateway.php:219
 msgid "Physical Product Status"
 msgstr ""
 
-#: src/AbstractGateway.php:228
+#: src/AbstractGateway.php:221
 msgid "Select status for physical product orders after successful payment."
 msgstr ""
 
-#: src/AbstractGateway.php:231
-#: src/AbstractGateway.php:242
-#: src/AbstractGateway.php:253
-#: src/AbstractGateway.php:264
+#: src/AbstractGateway.php:224
+#: src/AbstractGateway.php:235
+#: src/AbstractGateway.php:246
+#: src/AbstractGateway.php:257
 msgid "On Hold"
 msgstr ""
 
-#: src/AbstractGateway.php:232
-#: src/AbstractGateway.php:243
-#: src/AbstractGateway.php:254
-#: src/AbstractGateway.php:265
+#: src/AbstractGateway.php:225
+#: src/AbstractGateway.php:236
+#: src/AbstractGateway.php:247
+#: src/AbstractGateway.php:258
 msgid "Processing"
 msgstr ""
 
-#: src/AbstractGateway.php:233
-#: src/AbstractGateway.php:244
-#: src/AbstractGateway.php:255
-#: src/AbstractGateway.php:266
+#: src/AbstractGateway.php:226
+#: src/AbstractGateway.php:237
+#: src/AbstractGateway.php:248
+#: src/AbstractGateway.php:259
 msgid "Completed"
 msgstr ""
 
-#: src/AbstractGateway.php:237
+#: src/AbstractGateway.php:230
 msgid "Virtual Product Status"
 msgstr ""
 
-#: src/AbstractGateway.php:239
+#: src/AbstractGateway.php:232
 msgid "Select status for virtual product orders after successful payment."
 msgstr ""
 
-#: src/AbstractGateway.php:248
+#: src/AbstractGateway.php:241
 msgid "Downloadable Product Status"
 msgstr ""
 
-#: src/AbstractGateway.php:250
+#: src/AbstractGateway.php:243
 msgid "Select status for downloadable product orders after successful payment."
 msgstr ""
 
-#: src/AbstractGateway.php:259
+#: src/AbstractGateway.php:252
 msgid "Backorder Product Status"
 msgstr ""
 
-#: src/AbstractGateway.php:261
+#: src/AbstractGateway.php:254
 msgid "Select status for backorder product orders after successful payment."
 msgstr ""
 
 #. translators: %1$s: Order currency code, %2$s: Gateway base currency code
-#: src/AbstractGateway.php:275
+#: src/AbstractGateway.php:268
 #, php-format
 msgid "%1$s to %2$s Exchange Rate"
 msgstr ""
 
 #. translators: %s: Gateway base currency code
-#: src/AbstractGateway.php:283
+#: src/AbstractGateway.php:276
 #, php-format
 msgid "This rate will be applied to convert the total amount to %s."
 msgstr ""
 
-#: src/AbstractGateway.php:295
+#: src/AbstractGateway.php:288
 msgid "Pending Payment Redirect URL"
 msgstr ""
 
-#: src/AbstractGateway.php:297
+#: src/AbstractGateway.php:290
 msgid "URL to redirect customers to when the payment is pending."
 msgstr ""
 
-#: src/AbstractGateway.php:302
+#: src/AbstractGateway.php:295
 msgid "Debug Log"
 msgstr ""
 
-#: src/AbstractGateway.php:304
+#: src/AbstractGateway.php:297
 msgid "Enable logging"
 msgstr ""
 
 #. translators: %s: Log file path
-#: src/AbstractGateway.php:308
+#: src/AbstractGateway.php:301
 #, php-format
 msgid "Log gateway events inside %s"
 msgstr ""
 
-#: src/AbstractGateway.php:359
+#: src/AbstractGateway.php:381
+msgid "Invalid webhook token."
+msgstr ""
+
+#: src/AbstractGateway.php:396
 msgid "Invalid order"
 msgstr ""
 
-#: src/AbstractGateway.php:368
+#: src/AbstractGateway.php:405
 msgid "Payment URL not received"
 msgstr ""
 
-#: src/AbstractGateway.php:378
+#: src/AbstractGateway.php:415
 msgid "Awaiting UddoktaPay payment"
 msgstr ""
 
 #. translators: %s: Error message
-#: src/AbstractGateway.php:391
+#: src/AbstractGateway.php:428
 #, php-format
 msgid "An error occurred: %s"
 msgstr ""
 
 #. translators: %s: Error message
-#: src/AbstractGateway.php:419
+#: src/AbstractGateway.php:456
 #, php-format
 msgid "Error processing webhook: %s"
 msgstr ""
 
-#: src/AbstractGateway.php:439
+#: src/AbstractGateway.php:476
 msgid "Invalid order data received"
 msgstr ""
 
-#: src/AbstractGateway.php:444
-#: src/AbstractGateway.php:491
+#: src/AbstractGateway.php:481
+#: src/AbstractGateway.php:530
 msgid "Order not found"
 msgstr ""
 
-#: src/AbstractGateway.php:470
+#: src/AbstractGateway.php:509
 msgid "Empty webhook payload"
 msgstr ""
 
-#: src/AbstractGateway.php:474
+#: src/AbstractGateway.php:513
 msgid "Invalid webhook signature"
 msgstr ""
 
-#: src/AbstractGateway.php:480
+#: src/AbstractGateway.php:519
 msgid "Invoice ID not found in webhook data"
 msgstr ""
 
-#: src/AbstractGateway.php:486
+#: src/AbstractGateway.php:525
 msgid "Order ID not found in webhook data"
 msgstr ""
 
-#: src/AbstractGateway.php:533
+#: src/AbstractGateway.php:573
+msgid "Invalid payment status received. Order status was not changed."
+msgstr ""
+
+#: src/AbstractGateway.php:581
 msgid "Payment amount does not match the order total. Please verify manually."
 msgstr ""
 
-#: src/AbstractGateway.php:544
-msgid "Payment is on hold. Please check manually."
+#: src/AbstractGateway.php:592
+msgid "Payment is pending. Please check manually."
 msgstr ""
 
 #. translators: %1$s: Payment method, %2$s: Amount, %3$s: Transaction ID
-#: src/AbstractGateway.php:655
+#: src/AbstractGateway.php:703
 #, php-format
 msgid "Payment via %1$s. Amount: %2$s, Transaction ID: %3$s"
 msgstr ""
 
-#: src/AbstractGateway.php:670
+#: src/AbstractGateway.php:718
 msgid "Order contains backordered items. Items will be shipped when stock becomes available."
 msgstr ""
 
-#: src/AbstractGateway.php:751
+#: src/AbstractGateway.php:799
 msgid "Payment Method"
 msgstr ""
 
-#: src/AbstractGateway.php:757
+#: src/AbstractGateway.php:805
 msgid "Sender Number"
 msgstr ""
 
-#: src/AbstractGateway.php:763
+#: src/AbstractGateway.php:811
 msgid "Transaction ID"
 msgstr ""
 
-#: src/AbstractGateway.php:769
+#: src/AbstractGateway.php:817
 msgid "Amount"
 msgstr ""
 
+#: src/Admin/OrderListColumn.php:70
+msgid "UddoktaPay TrxID"
+msgstr ""
+
+#: src/Admin/OrderListColumn.php:71
+msgid "UddoktaPay Sender"
+msgstr ""
+
 #: src/Blocks/InternationalBlocks.php:52
-#: src/InternationalGateway.php:76
+#: src/InternationalGateway.php:75
 msgid "International Payment"
 msgstr ""
 
@@ -280,11 +296,11 @@ msgstr ""
 msgid "Sign up for UddoktaPay account"
 msgstr ""
 
-#: src/InternationalGateway.php:85
+#: src/InternationalGateway.php:84
 msgid "Pay securely via International payment methods."
 msgstr ""
 
-#: src/InternationalGateway.php:94
+#: src/InternationalGateway.php:93
 msgid "Enable UddoktaPay International Payment"
 msgstr ""
 
@@ -292,15 +308,15 @@ msgstr ""
 msgid "Accept Bangladeshi payments via multiple gateways including bKash, Nagad, Rocket and more."
 msgstr ""
 
-#: src/LocalGateway.php:76
+#: src/LocalGateway.php:75
 msgid "Bangladeshi Payment"
 msgstr ""
 
-#: src/LocalGateway.php:85
+#: src/LocalGateway.php:84
 msgid "Pay securely via Bangladeshi payment methods."
 msgstr ""
 
-#: src/LocalGateway.php:94
+#: src/LocalGateway.php:93
 msgid "Enable UddoktaPay"
 msgstr ""
 
@@ -310,14 +326,14 @@ msgstr ""
 msgid "%1$s requires %2$s to be installed and activated."
 msgstr ""
 
-#: uddoktapay-gateway.php:194
+#: uddoktapay-gateway.php:196
 msgid "BD Methods Settings"
 msgstr ""
 
-#: uddoktapay-gateway.php:199
+#: uddoktapay-gateway.php:201
 msgid "Global Methods Settings"
 msgstr ""
 
-#: uddoktapay-gateway.php:204
+#: uddoktapay-gateway.php:206
 msgid "Purchase License"
 msgstr ""
